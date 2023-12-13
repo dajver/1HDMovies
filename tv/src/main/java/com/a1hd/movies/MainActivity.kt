@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.a1hd.movies.base.BaseActivity
 import com.a1hd.movies.databinding.ActivityMainBinding
 import com.a1hd.movies.views.VideoWebView
@@ -20,6 +21,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         binding.webView.init(supportFragmentManager)
         binding.webView.setFullScreenView(actionBar, binding.fullscreenView)
         binding.webView.loadUrl("https://1hd.to/home")
+        binding.webView.sourcesListLiveData.observe(this) {
+            binding.ivSourceAvailable.isVisible = it.isNotEmpty()
+        }
+        binding.webView.sourcesLisFetchingLiveData.observe(this) {
+            binding.pbLoadingSources.isVisible = it
+        }
+
+        binding.ivSourceAvailable.setOnClickListener {
+            binding.webView.showSourceDialog(supportFragmentManager)
+        }
 
         onBackButtonPressed()
     }

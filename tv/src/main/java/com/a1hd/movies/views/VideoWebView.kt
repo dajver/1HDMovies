@@ -12,10 +12,11 @@ import android.widget.FrameLayout
 import android.app.ActionBar
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.a1hd.movies.client.VideoChromeClient
 import com.a1hd.movies.databinding.RwVideoWebviewBinding
 import com.a1hd.movies.select.SelectSourceSheetFragment
@@ -26,6 +27,14 @@ class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(c
     private var chromeClient: VideoChromeClient
     private val handler = Handler(Looper.getMainLooper())
     private val delayMillis: Long = 1000
+    private val sourceList = mutableListOf<String>()
+    private var isRequesting = false
+
+    private val sourcesListMutableLiveData = MutableLiveData<List<String>>()
+    val sourcesListLiveData: LiveData<List<String>> = sourcesListMutableLiveData
+
+    private val sourcesListFetchingMutableLiveData = MutableLiveData<Boolean>()
+    val sourcesLisFetchingLiveData: LiveData<Boolean> = sourcesListFetchingMutableLiveData
 
     init {
         viewBinding = RwVideoWebviewBinding.inflate(LayoutInflater.from(context), this, true)
@@ -33,18 +42,26 @@ class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(c
     }
 
     fun init(fragmentManager: FragmentManager) {
-        val sourceList = mutableListOf<String>()
         viewBinding.videoViewWebview.webChromeClient = chromeClient
         viewBinding.videoViewWebview.webViewClient = object : WebViewClient() {
             override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
                 val url = request.url.toString()
                 if (url.endsWith(".m3u8")) {
+                    if (!isRequesting) {
+                        sourceList.clear()
+                        isRequesting = true
+                        sourcesListFetchingMutableLiveData.postValue(true)
+                    }
+
                     sourceList.add(url)
                     handler.removeCallbacksAndMessages(null)
                     handler.postDelayed({
                         if (sourceList.isNotEmpty()) {
-                            showSourceDialog(fragmentManager, sourceList)
+                            sourcesListMutableLiveData.postValue(sourceList)
+                            showSourceDialog(fragmentManager)
                         }
+                        isRequesting = false
+                        sourcesListFetchingMutableLiveData.postValue(false)
                     }, delayMillis)
                 }
                 return super.shouldInterceptRequest(view, request)
@@ -58,15 +75,10 @@ class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(c
         }
     }
 
-    private fun showSourceDialog(fragmentManager: FragmentManager, sourceList: MutableList<String>) {
+    fun showSourceDialog(fragmentManager: FragmentManager) {
         val sourceDialog = SelectSourceSheetFragment()
         sourceDialog.setSourceList(sourceList)
         sourceDialog.show(fragmentManager, "SelectSourceSheetFragment")
-        sourceDialog.lifecycle.addObserver(LifecycleEventObserver { _, event ->
-            if(event == Lifecycle.Event.ON_DESTROY) {
-                sourceList.clear()
-            }
-        })
     }
 
     fun setFullScreenView(actionBar: ActionBar?, frameLayout: FrameLayout) {
