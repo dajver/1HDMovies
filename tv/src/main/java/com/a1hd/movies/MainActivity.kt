@@ -8,20 +8,18 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.a1hd.movies.views.VideoWebview
+import com.a1hd.movies.base.BaseActivity
+import com.a1hd.movies.databinding.ActivityMainBinding
+import com.a1hd.movies.views.VideoWebView
 
-class MainActivity : AppCompatActivity() {
-
-    private lateinit var webView: VideoWebview
+class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        webView = findViewById(R.id.webView)
-        webView.setFullScreenView(actionBar, findViewById(R.id.fullscreen_view))
-        webView.loadUrl("https://1hd.to/home")
+        binding.webView.init(supportFragmentManager)
+        binding.webView.setFullScreenView(actionBar, binding.fullscreenView)
+        binding.webView.loadUrl("https://1hd.to/home")
 
         onBackButtonPressed()
     }
@@ -29,8 +27,8 @@ class MainActivity : AppCompatActivity() {
     private fun AppCompatActivity.onBackButtonPressed() {
         val onBackPressed: OnBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (webView.canGoBack()){
-                    webView.goBack()
+                if (binding.webView.canGoBack()){
+                    binding.webView.goBack()
                 } else {
                     backClickListener {
                         finishAndRemoveTask()
