@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.a1hd.movies.base.BaseActivity
 import com.a1hd.movies.databinding.ActivityMainBinding
-import com.a1hd.movies.views.VideoWebView
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
@@ -21,13 +20,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         binding.webView.init(supportFragmentManager)
         binding.webView.setFullScreenView(actionBar, binding.fullscreenView)
         binding.webView.loadUrl("https://1hd.to/home")
+
+        setupObservers()
+        setupListeners()
+    }
+
+    private fun setupObservers() {
         binding.webView.sourcesListLiveData.observe(this) {
             binding.ivSourceAvailable.isVisible = it.isNotEmpty()
         }
         binding.webView.sourcesLisFetchingLiveData.observe(this) {
             binding.pbLoadingSources.isVisible = it
         }
+    }
 
+    private fun setupListeners() {
         binding.ivSourceAvailable.setOnClickListener {
             binding.webView.showSourceDialog(supportFragmentManager)
         }

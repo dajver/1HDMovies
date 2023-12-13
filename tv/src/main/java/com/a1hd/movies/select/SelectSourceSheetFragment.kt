@@ -4,7 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.a1hd.movies.R
 import com.a1hd.movies.base.BaseBottomSheetDialogFragment
 import com.a1hd.movies.databinding.FragmentSelectSourceSheetBinding
 import com.a1hd.movies.select.adapter.SelectSourceRecyclerAdapter
@@ -23,7 +25,9 @@ class SelectSourceSheetFragment : BaseBottomSheetDialogFragment<FragmentSelectSo
             startActivity(intent)
         }
         binding.rvSelectSource.adapter = selectSourceRecyclerAdapter
-        binding.rvSelectSource.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+        val divider = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+        divider.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.divider_color)!!)
+        binding.rvSelectSource.addItemDecoration(divider)
     }
 
     fun setSourceList(sourcesList: MutableList<String>) {
