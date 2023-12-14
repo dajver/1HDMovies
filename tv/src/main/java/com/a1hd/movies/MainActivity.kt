@@ -17,7 +17,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.webView.init(supportFragmentManager)
+        binding.webView.init()
         binding.webView.setFullScreenView(actionBar, binding.fullscreenView)
         binding.webView.loadUrl("https://1hd.to/home")
 
@@ -27,7 +27,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     private fun setupObservers() {
         binding.webView.sourcesListLiveData.observe(this) {
-            binding.ivSourceAvailable.isVisible = it.isNotEmpty()
+            binding.webView.ivSourceAvailable.isVisible = it.isNotEmpty()
         }
         binding.webView.sourcesLisFetchingLiveData.observe(this) {
             binding.pbLoadingSources.isVisible = it
@@ -35,7 +35,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     private fun setupListeners() {
-        binding.ivSourceAvailable.setOnClickListener {
+        binding.webView.ivSourceAvailable.setOnClickListener {
             binding.webView.showSourceDialog(supportFragmentManager)
         }
 
@@ -45,7 +45,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     private fun AppCompatActivity.onBackButtonPressed() {
         val onBackPressed: OnBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (binding.webView.canGoBack()){
+                if (binding.webView.canGoBack()) {
                     binding.webView.goBack()
                 } else {
                     backClickListener {
@@ -60,7 +60,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     private var doubleBackToExitPressedOnce = false
 
     private fun backClickListener(onFinishCalled: () -> Unit) {
-        val toast = Toast.makeText(this, getString(R.string.back_button_double_click_text), Toast.LENGTH_SHORT)
+        val toast = Toast.makeText(
+            this,
+            getString(R.string.back_button_double_click_text),
+            Toast.LENGTH_SHORT
+        )
 
         if (doubleBackToExitPressedOnce) {
             toast.cancel()

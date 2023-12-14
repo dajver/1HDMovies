@@ -17,14 +17,15 @@ class SelectSourceRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectSourceHolder {
-        return SelectSourceHolder(
-            ItemSourceBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        )
+        return SelectSourceHolder(ItemSourceBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         val holder = viewHolder as SelectSourceHolder
         holder.bind(sourcesList[position], onSourceClickListener)
+        holder.itemView.setOnFocusChangeListener { v, hasFocus ->
+            v.isSelected = hasFocus
+        }
     }
 
     override fun getItemCount(): Int {

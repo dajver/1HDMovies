@@ -10,9 +10,10 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import android.app.ActionBar
+import android.content.Intent
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
@@ -26,7 +27,7 @@ class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(c
     private var viewBinding: RwVideoWebviewBinding
     private var chromeClient: VideoChromeClient
     private val handler = Handler(Looper.getMainLooper())
-    private val delayMillis: Long = 1000
+    private val delayMillis: Long = 2000
     private val sourceList = mutableListOf<String>()
     private var isRequesting = false
 
@@ -41,7 +42,7 @@ class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(c
         chromeClient = VideoChromeClient(viewBinding.videoViewFrame, viewBinding.videoViewWebview)
     }
 
-    fun init(fragmentManager: FragmentManager) {
+    fun init() {
         viewBinding.videoViewWebview.webChromeClient = chromeClient
         viewBinding.videoViewWebview.webViewClient = object : WebViewClient() {
             override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
@@ -58,7 +59,10 @@ class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(c
                     handler.postDelayed({
                         if (sourceList.isNotEmpty()) {
                             sourcesListMutableLiveData.postValue(sourceList)
-                            showSourceDialog(fragmentManager)
+
+                            val intent = Intent(Intent.ACTION_VIEW)
+                            intent.data = Uri.parse(sourceList.first())
+                            context.startActivity(intent)
                         }
                         isRequesting = false
                         sourcesListFetchingMutableLiveData.postValue(false)
@@ -94,4 +98,7 @@ class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(c
     fun goBack() {
         viewBinding.videoViewWebview.goBack()
     }
+
+    val ivSourceAvailable
+        get() = viewBinding.ivSourceAvailable
 }

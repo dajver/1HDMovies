@@ -21,7 +21,7 @@ class SelectSourceHolder (private val viewBinding: ItemSourceBinding) : Recycler
             3 -> "No subtitles"
             else -> "Original"
         }
-        viewBinding.tvSource.setOnClickListener {
+        itemView.setOnClickListener {
             onSourceClickListener.invoke(source)
         }
     }
