@@ -11,8 +11,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.a1hd.movies.base.BaseActivity
 import com.a1hd.movies.databinding.ActivityMainBinding
+import com.a1hd.movies.etc.LastOpenedScreenRepository
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
+
+    @Inject
+    lateinit var lastOpenedScreenRepository: LastOpenedScreenRepository
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {

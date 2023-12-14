@@ -1,28 +1,37 @@
 package com.a1hd.movies.views
 
+import android.app.ActionBar
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
+import android.os.Handler
+import android.os.Looper
+import android.provider.Settings.Secure
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
-import android.app.ActionBar
-import android.content.Intent
-import android.net.Uri
-import android.os.Handler
-import android.os.Looper
-import android.view.LayoutInflater
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.a1hd.movies.client.VideoChromeClient
 import com.a1hd.movies.databinding.RwVideoWebviewBinding
+import com.a1hd.movies.etc.LastOpenedScreenRepository
 import com.a1hd.movies.select.SelectSourceSheetFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+
+@AndroidEntryPoint
 class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(context, attributeSet) {
+
+    @Inject
+    lateinit var lastOpenedScreenRepository: LastOpenedScreenRepository
 
     private var viewBinding: RwVideoWebviewBinding
     private var chromeClient: VideoChromeClient
@@ -70,6 +79,11 @@ class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(c
                 }
                 return super.shouldInterceptRequest(view, request)
             }
+
+            override fun shouldOverrideUrlLoading(view: WebView?, url: String): Boolean {
+                lastOpenedScreenRepository.lastOpenedPage = url
+                return false
+            }
         }
         viewBinding.videoViewWebview.settings.mediaPlaybackRequiresUserGesture = false
         viewBinding.videoViewWebview.setBackgroundColor(Color.TRANSPARENT)
@@ -91,6 +105,7 @@ class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(c
 
     fun loadUrl(url: String) {
         viewBinding.videoViewWebview.loadUrl(url)
+        lastOpenedScreenRepository.lastOpenedPage = url
     }
 
     fun canGoBack(): Boolean = viewBinding.videoViewWebview.canGoBack()
