@@ -1,5 +1,6 @@
 package com.a1hd.movies
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -8,53 +9,49 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import com.a1hd.movies.base.BaseActivity
 import com.a1hd.movies.databinding.ActivityMainBinding
-import com.a1hd.movies.etc.LastOpenedScreenRepository
+import com.a1hd.movies.ui.navigation.NavigationRouter
+import com.a1hd.movies.ui.navigation.route.Router
 import dagger.hilt.android.AndroidEntryPoint
+import java.security.SecureRandom
+import java.security.cert.X509Certificate
 import javax.inject.Inject
+import javax.net.ssl.HostnameVerifier
+import javax.net.ssl.HttpsURLConnection
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
+
+
+private const val SPLASH_DISPLAY_LENGTH = 2000
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     @Inject
-    lateinit var lastOpenedScreenRepository: LastOpenedScreenRepository
+    lateinit var navigationRouter: NavigationRouter
+
+    private val handler = Handler(Looper.getMainLooper())
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.webView.init()
-        binding.webView.setFullScreenView(actionBar, binding.fullscreenView)
-        binding.webView.loadUrl("https://1hd.to/home")
-
-        setupObservers()
-        setupListeners()
-    }
-
-    private fun setupObservers() {
-        binding.webView.sourcesListLiveData.observe(this) {
-            binding.webView.ivSourceAvailable.isVisible = it.isNotEmpty()
-        }
-        binding.webView.sourcesLisFetchingLiveData.observe(this) {
-            binding.pbLoadingSources.isVisible = it
-        }
-    }
-
-    private fun setupListeners() {
-        binding.webView.ivSourceAvailable.setOnClickListener {
-            binding.webView.showSourceDialog(supportFragmentManager)
-        }
-
+        disableSSLCheck()
+        navigationRouter.init(supportFragmentManager)
+        navigationRouter.navigateTo(Router.Splash)
+        handler.postDelayed(runnable, SPLASH_DISPLAY_LENGTH.toLong())
         onBackButtonPressed()
+    }
+
+    private val runnable = Runnable {
+        navigationRouter.navigateTo(Router.Dashboard)
     }
 
     private fun AppCompatActivity.onBackButtonPressed() {
         val onBackPressed: OnBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (binding.webView.canGoBack()) {
-                    binding.webView.goBack()
-                } else {
+                if (navigationRouter.onBackPressed()) {
                     backClickListener {
                         finishAndRemoveTask()
                     }
@@ -84,5 +81,27 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         Handler(Looper.getMainLooper()).postDelayed({
             doubleBackToExitPressedOnce = false
         }, 2000)
+    }
+
+    @SuppressLint("TrustAllX509TrustManager", "CustomX509TrustManager")
+    private fun disableSSLCheck() {
+        val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+            override fun getAcceptedIssuers(): Array<X509Certificate> {
+                return arrayOf()
+            }
+
+            override fun checkClientTrusted(certs: Array<X509Certificate>, authType: String) {}
+
+            override fun checkServerTrusted(certs: Array<X509Certificate>, authType: String) {}
+        })
+        try {
+            val sc = SSLContext.getInstance("SSL")
+            sc.init(null, trustAllCerts, SecureRandom())
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.socketFactory)
+        } catch (e: Exception) {
+            // ignore
+        }
+        val allHostsValid = HostnameVerifier { _, _ -> true }
+        HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid)
     }
 }
