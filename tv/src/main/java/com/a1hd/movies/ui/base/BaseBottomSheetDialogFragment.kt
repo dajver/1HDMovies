@@ -1,4 +1,4 @@
-package com.a1hd.movies.base
+package com.a1hd.movies.ui.base
 
 import android.os.Bundle
 import android.view.LayoutInflater

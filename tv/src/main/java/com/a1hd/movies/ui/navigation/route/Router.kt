@@ -1,8 +1,8 @@
 package com.a1hd.movies.ui.navigation.route
 
 import androidx.fragment.app.Fragment
-import com.a1hd.movies.ui.dashboard.DashboardFragment
-import com.a1hd.movies.ui.SplashFragment
+import com.a1hd.movies.ui.sections.dashboard.DashboardFragment
+import com.a1hd.movies.ui.sections.SplashFragment
 
 sealed class Router(val clearStack: Boolean = false) {
     object Splash : Router(clearStack = true)

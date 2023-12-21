@@ -1,4 +1,4 @@
-package com.a1hd.movies.views;
+package com.a1hd.movies.ui.views;
 
 import android.content.Context;
 import android.graphics.Canvas;

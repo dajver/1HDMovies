@@ -1,4 +1,4 @@
-package com.a1hd.movies.views
+package com.a1hd.movies.ui.views
 
 import android.app.ActionBar
 import android.content.Context
@@ -22,7 +22,7 @@ import androidx.lifecycle.MutableLiveData
 import com.a1hd.movies.client.VideoChromeClient
 import com.a1hd.movies.databinding.RwVideoWebviewBinding
 import com.a1hd.movies.etc.LastOpenedScreenRepository
-import com.a1hd.movies.select.SelectSourceSheetFragment
+import com.a1hd.movies.ui.sections.select.SelectSourceSheetFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

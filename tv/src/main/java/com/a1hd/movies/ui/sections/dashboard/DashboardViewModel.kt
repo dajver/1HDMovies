@@ -1,4 +1,4 @@
-package com.a1hd.movies.ui.dashboard
+package com.a1hd.movies.ui.sections.dashboard
 
 import android.util.Log
 import androidx.lifecycle.LiveData

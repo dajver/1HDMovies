@@ -3,7 +3,7 @@ package com.a1hd.movies.ui.navigation
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.a1hd.movies.R
-import com.a1hd.movies.ui.dashboard.DashboardFragment
+import com.a1hd.movies.ui.sections.dashboard.DashboardFragment
 import com.a1hd.movies.ui.navigation.route.Router
 import com.a1hd.movies.ui.navigation.route.toFragment
 import com.a1hd.movies.ui.navigation.route.toRouter

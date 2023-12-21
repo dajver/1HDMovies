@@ -3,4 +3,6 @@
     <string name="back_button_double_click_text">Please click BACK again to exit</string>
     <string name="available_source">Available source %d, m3u8 livestream</string>
     <string name="sources_to_play">Source urls to play</string>
+    <string name="movies">Movies</string>
+    <string name="tv_shows">Tv Shows</string>
 </resources>

@@ -1,16 +1,16 @@
-package com.a1hd.movies.ui.dashboard
+package com.a1hd.movies.ui.sections.dashboard
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.a1hd.movies.base.BaseFragment
+import com.a1hd.movies.ui.base.BaseFragment
 import com.a1hd.movies.databinding.FragmentDashboardBinding
-import com.a1hd.movies.ui.dashboard.adapter.DashboardRecyclerAdapter
+import com.a1hd.movies.ui.sections.dashboard.adapter.DashboardRecyclerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DashboardFragment : BaseFragment<FragmentDashboardBinding>(FragmentDashboardBinding::inflate) {
+class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboardBinding::inflate) {
 
     @Inject
     lateinit var dashboardRecyclerAdapter: DashboardRecyclerAdapter
@@ -19,11 +19,14 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(FragmentDashboa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dashboardRecyclerAdapter.onMovieClickListener = {
+
+        }
         binding.rvMovies.adapter = dashboardRecyclerAdapter
         
         dashboardViewModel.fetchDashboard()
         dashboardViewModel.fetchDashboardMoviesLiveData.observe(viewLifecycleOwner) {
-            dashboardRecyclerAdapter.setMovies(it.toMutableList())
+            dashboardRecyclerAdapter.setMovies(it.sortedBy { it.type }.toMutableList())
         }
     }
 }

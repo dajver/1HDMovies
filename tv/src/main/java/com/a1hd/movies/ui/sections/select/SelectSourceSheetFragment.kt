@@ -1,4 +1,4 @@
-package com.a1hd.movies.select
+package com.a1hd.movies.ui.sections.select
 
 import android.content.Intent
 import android.net.Uri
@@ -7,9 +7,9 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.a1hd.movies.R
-import com.a1hd.movies.base.BaseBottomSheetDialogFragment
+import com.a1hd.movies.ui.base.BaseBottomSheetDialogFragment
 import com.a1hd.movies.databinding.FragmentSelectSourceSheetBinding
-import com.a1hd.movies.select.adapter.SelectSourceRecyclerAdapter
+import com.a1hd.movies.ui.sections.select.adapter.SelectSourceRecyclerAdapter
 
 class SelectSourceSheetFragment : BaseBottomSheetDialogFragment<FragmentSelectSourceSheetBinding>(FragmentSelectSourceSheetBinding::inflate) {
 

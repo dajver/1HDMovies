@@ -1,4 +1,4 @@
-package com.a1hd.movies
+package com.a1hd.movies.ui
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -9,7 +9,8 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.a1hd.movies.base.BaseActivity
+import com.a1hd.movies.R
+import com.a1hd.movies.ui.base.BaseActivity
 import com.a1hd.movies.databinding.ActivityMainBinding
 import com.a1hd.movies.ui.navigation.NavigationRouter
 import com.a1hd.movies.ui.navigation.route.Router
@@ -22,7 +23,6 @@ import javax.net.ssl.HttpsURLConnection
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
-
 
 private const val SPLASH_DISPLAY_LENGTH = 2000
 

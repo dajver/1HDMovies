@@ -1,10 +1,10 @@
-package com.a1hd.movies.select.adapter
+package com.a1hd.movies.ui.sections.select.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.a1hd.movies.databinding.ItemSourceBinding
-import com.a1hd.movies.select.adapter.holder.SelectSourceHolder
+import com.a1hd.movies.ui.sections.select.adapter.holder.SelectSourceHolder
 
 class SelectSourceRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

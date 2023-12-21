@@ -1,20 +1,21 @@
-package com.a1hd.movies.ui.dashboard.adapter
+package com.a1hd.movies.ui.sections.dashboard.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.a1hd.movies.databinding.ItemDashboardBinding
-import com.a1hd.movies.ui.dashboard.adapter.holders.DashboardHolder
+import com.a1hd.movies.ui.sections.dashboard.adapter.holders.DashboardHolder
 import com.a1hd.movies.ui.repository.MoviesDataModel
 import javax.inject.Inject
 
 class DashboardRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var groupsList: MutableList<MoviesDataModel> = mutableListOf()
-    var onWorkoutHistoryClickListener: (MoviesDataModel) -> Unit = { }
+    private var moviesList: MutableList<MoviesDataModel> = mutableListOf()
+    var onMovieClickListener: (MoviesDataModel) -> Unit = { }
 
     fun setMovies(groups: MutableList<MoviesDataModel>) {
-        this.groupsList = groups
+        this.moviesList = groups
         notifyDataSetChanged()
     }
 
@@ -24,12 +25,14 @@ class DashboardRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<Recy
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val model = groupsList[position]
-        (holder as DashboardHolder).bind(model, onWorkoutHistoryClickListener)
+        val holder = (holder as DashboardHolder)
+        val isNotVisible = position > 0 && moviesList[position - 1].type == moviesList[position].type
+        holder.bind(moviesList[position], onMovieClickListener)
+        holder.showTitle(!isNotVisible)
         holder.itemView.setOnFocusChangeListener { v, hasFocus ->
             v.isSelected = hasFocus
         }
     }
 
-    override fun getItemCount(): Int = groupsList.size
+    override fun getItemCount(): Int = moviesList.size
 }
