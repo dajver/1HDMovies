@@ -1,5 +1,6 @@
 package com.a1hd.movies.ui.repository
 
+import android.annotation.SuppressLint
 import com.a1hd.movies.etc.extensions.io
 import org.jsoup.Jsoup
 import javax.inject.Inject
@@ -8,6 +9,7 @@ class ParseJsonMovieDetailsRepository @Inject constructor() {
 
     suspend fun fetchDetails(url: String): MoviesDetailsDataModel = io {
         val linkToMovie = if (url.startsWith("https://1hd")) url else "https://1hd.to/$url"
+//doc.select("div.film-episodes").select("div.film-episodes").textNodes()
         val doc = Jsoup.connect(linkToMovie).get()
         val type = if (linkToMovie.contains("movie")) MovieType.MOVIE else MovieType.TV_SHOW
         val movieDetails = doc.select("div.detail-elements")
@@ -25,6 +27,9 @@ class ParseJsonMovieDetailsRepository @Inject constructor() {
         val imdb = if (ratingAndOther.size >= 4) ratingAndOther[4] else ""
         val release = if (ratingAndOther.size >= 5) ratingAndOther[5] else ""
         val production = if (ratingAndOther.size >= 6) ratingAndOther[6] else ""
+        if (type == MovieType.TV_SHOW) {
+
+        }
         val movieDetailsModel = MoviesDetailsDataModel(title, thumbnail, link, type, description, quality, cast, genre, duration, country, imdb, release, production)
         movieDetailsModel
     }

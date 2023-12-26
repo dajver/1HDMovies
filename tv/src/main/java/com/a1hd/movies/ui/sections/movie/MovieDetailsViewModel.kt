@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.a1hd.movies.etc.extensions.launch
-import com.a1hd.movies.ui.repository.MoviesDataModel
 import com.a1hd.movies.ui.repository.MoviesDetailsDataModel
 import com.a1hd.movies.ui.repository.ParseJsonMovieDetailsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,8 +17,8 @@ class MovieDetailsViewModel @Inject constructor(
     private val fetchDetailsMoviesMutableLiveData = MutableLiveData<MoviesDetailsDataModel>()
     val fetchDetailsMoviesLiveData: LiveData<MoviesDetailsDataModel> = fetchDetailsMoviesMutableLiveData
 
-    fun fetchDetails(url: String) = launch {
-        val details = parseJsonMovieDetailsRepository.fetchDetails(url)
+    fun fetchDetails(html: String) = launch {
+        val details = parseJsonMovieDetailsRepository.fetchDetails(html)
         fetchDetailsMoviesMutableLiveData.postValue(details)
     }
 }

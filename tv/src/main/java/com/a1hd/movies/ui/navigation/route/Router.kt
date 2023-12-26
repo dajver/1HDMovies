@@ -10,8 +10,8 @@ import com.a1hd.movies.ui.sections.movie.watch.WatchMovieFragment
 sealed class Router(val clearStack: Boolean = false) {
     object Splash : Router(clearStack = true)
     object Dashboard : Router(clearStack = true)
-    class MovieDetails(val movieUrl: String? = null) : Router()
-    class WatchMovie(val movieUrl: String? = null, val movieType: MovieType? = null) : Router()
+    class MovieDetails(val movieUrl: String?) : Router()
+    class WatchMovie(val movieUrl: String?, val movieType: MovieType?) : Router()
 }
 
 fun Router.toFragment(): Fragment {
@@ -27,8 +27,8 @@ fun Fragment.toRouter(): Router {
     return when (this) {
         is SplashFragment -> Router.Splash
         is DashboardFragment -> Router.Dashboard
-        is MovieDetailsFragment -> Router.MovieDetails()
-        is WatchMovieFragment -> Router.WatchMovie()
+        is MovieDetailsFragment -> Router.MovieDetails(movieUrl)
+        is WatchMovieFragment -> Router.WatchMovie(movieUrl, movieType)
         else -> throw RuntimeException("Not found such fragment in router $this")
     }
 }

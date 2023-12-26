@@ -5,10 +5,9 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.a1hd.movies.R
-import com.a1hd.movies.ui.base.BaseFragment
 import com.a1hd.movies.databinding.FragmentMovieDetailsBinding
+import com.a1hd.movies.ui.base.BaseFragment
 import com.a1hd.movies.ui.navigation.route.Router
-import com.a1hd.movies.ui.repository.MovieType
 import com.a1hd.movies.ui.repository.MoviesDetailsDataModel
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,7 +17,7 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding>(FragmentMo
 
     private val movieDetailsViewModel: MovieDetailsViewModel by viewModels()
 
-    private var movieUrl: String? = null
+    var movieUrl: String? = null
     private var movieDetailsModel: MoviesDetailsDataModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

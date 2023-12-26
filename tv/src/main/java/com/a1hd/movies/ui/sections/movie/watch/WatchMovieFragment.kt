@@ -11,8 +11,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class WatchMovieFragment: BaseFragment<FragmentWatchMovieBinding>(FragmentWatchMovieBinding::inflate) {
 
-    private var movieUrl: String? = null
-    private var movieType: MovieType? = null
+    var movieUrl: String? = null
+    var movieType: MovieType? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
