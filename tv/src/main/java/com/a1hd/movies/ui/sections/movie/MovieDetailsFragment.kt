@@ -8,6 +8,7 @@ import com.a1hd.movies.R
 import com.a1hd.movies.ui.base.BaseFragment
 import com.a1hd.movies.databinding.FragmentMovieDetailsBinding
 import com.a1hd.movies.ui.navigation.route.Router
+import com.a1hd.movies.ui.repository.MovieType
 import com.a1hd.movies.ui.repository.MoviesDetailsDataModel
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,7 +54,7 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding>(FragmentMo
         }
 
         binding.btnWatchMovie.setOnClickListener {
-            navigationRouter.navigateTo(Router.WatchMovie(movieDetailsModel?.link))
+            navigationRouter.navigateTo(Router.WatchMovie(movieDetailsModel?.link, movieDetailsModel?.type))
         }
     }
 

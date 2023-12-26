@@ -9,6 +9,7 @@ class ParseJsonMovieDetailsRepository @Inject constructor() {
     suspend fun fetchDetails(url: String): MoviesDetailsDataModel = io {
         val linkToMovie = if (url.startsWith("https://1hd")) url else "https://1hd.to/$url"
         val doc = Jsoup.connect(linkToMovie).get()
+        val type = if (linkToMovie.contains("movie")) MovieType.MOVIE else MovieType.TV_SHOW
         val movieDetails = doc.select("div.detail-elements")
         val thumbnail = movieDetails.select("img.film-thumbnail-img").attr("src")
         val title = movieDetails.select("h3.heading-xl").text()
@@ -24,7 +25,7 @@ class ParseJsonMovieDetailsRepository @Inject constructor() {
         val imdb = if (ratingAndOther.size >= 4) ratingAndOther[4] else ""
         val release = if (ratingAndOther.size >= 5) ratingAndOther[5] else ""
         val production = if (ratingAndOther.size >= 6) ratingAndOther[6] else ""
-        val movieDetailsModel = MoviesDetailsDataModel(title, thumbnail, link, description, quality, cast, genre, duration, country, imdb, release, production)
+        val movieDetailsModel = MoviesDetailsDataModel(title, thumbnail, link, type, description, quality, cast, genre, duration, country, imdb, release, production)
         movieDetailsModel
     }
 }
@@ -33,6 +34,7 @@ data class MoviesDetailsDataModel(
     val name: String,
     val thumbnail: String,
     val link: String,
+    val type: MovieType,
     val description: String,
     val quality: String,
     val cast: String,

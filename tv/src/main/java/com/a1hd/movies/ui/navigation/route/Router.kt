@@ -1,6 +1,7 @@
 package com.a1hd.movies.ui.navigation.route
 
 import androidx.fragment.app.Fragment
+import com.a1hd.movies.ui.repository.MovieType
 import com.a1hd.movies.ui.sections.dashboard.DashboardFragment
 import com.a1hd.movies.ui.sections.SplashFragment
 import com.a1hd.movies.ui.sections.movie.MovieDetailsFragment
@@ -10,7 +11,7 @@ sealed class Router(val clearStack: Boolean = false) {
     object Splash : Router(clearStack = true)
     object Dashboard : Router(clearStack = true)
     class MovieDetails(val movieUrl: String? = null) : Router()
-    class WatchMovie(val movieUrl: String? = null) : Router()
+    class WatchMovie(val movieUrl: String? = null, val movieType: MovieType? = null) : Router()
 }
 
 fun Router.toFragment(): Fragment {
@@ -18,7 +19,7 @@ fun Router.toFragment(): Fragment {
         Router.Splash -> SplashFragment()
         Router.Dashboard -> DashboardFragment()
         is Router.MovieDetails -> MovieDetailsFragment.newInstance(movieUrl)
-        is Router.WatchMovie -> WatchMovieFragment.newInstance(movieUrl)
+        is Router.WatchMovie -> WatchMovieFragment.newInstance(movieUrl, movieType)
     }
 }
 
