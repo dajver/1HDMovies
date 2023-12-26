@@ -18,6 +18,7 @@ class DashboardHolder(private val binding: ItemDashboardBinding) : RecyclerView.
         } else {
             itemView.context.getString(R.string.tv_shows)
         }
+        binding.tvQuality.text = movieData.quality
         Glide.with(itemView.context).load(movieData.thumbnail).into(binding.ivPoster)
 
         itemView.setOnClickListener {

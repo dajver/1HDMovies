@@ -26,7 +26,6 @@ import com.a1hd.movies.ui.sections.select.SelectSourceSheetFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(context, attributeSet) {
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -31,6 +31,18 @@
             android:src="@drawable/img_poster" />
 
         <TextView
+            android:id="@+id/tvQuality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:padding="10dp"
+            android:background="@android:color/transparent"
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            tools:text="HD" />
+
+        <TextView
             android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,4 +54,5 @@
             tools:text="Title Name" />
 
     </FrameLayout>
+
 </LinearLayout>

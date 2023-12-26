@@ -5,4 +5,13 @@
     <string name="sources_to_play">Source urls to play</string>
     <string name="movies">Movies</string>
     <string name="tv_shows">Tv Shows</string>
+    <string name="genres">Genres</string>
+    <string name="casts">Casts</string>
+    <string name="duration">Duration</string>
+    <string name="country">Country</string>
+    <string name="imdb">IMDB</string>
+    <string name="release">Release</string>
+    <string name="production">Production</string>
+    <string name="min">min %s</string>
+    <string name="watch_movie">Watch Movie</string>
 </resources>

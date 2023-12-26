@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/pbProgress"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@android:color/white"
+        android:visibility="visible"
+        android:layout_gravity="center"
+        tools:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMovies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:listitem="@layout/item_dashboard"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="4" />
+        app:spanCount="4"
+        tools:listitem="@layout/item_dashboard"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
-</LinearLayout>
+</FrameLayout>
