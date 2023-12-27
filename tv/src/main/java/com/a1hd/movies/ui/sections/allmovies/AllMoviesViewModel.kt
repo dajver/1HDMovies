@@ -17,8 +17,10 @@ class AllMoviesViewModel @Inject constructor(
     private val fetchMoviesMutableLiveData = MutableLiveData<List<MoviesDataModel>>()
     val fetchMoviesLiveData: LiveData<List<MoviesDataModel>> = fetchMoviesMutableLiveData
 
+    var currentPage = 1
+
     fun fetchMovies() = launch {
-        val parseData = parseJsonMoviesRepository.fetchMovies(page = 1)
+        val parseData = parseJsonMoviesRepository.fetchMovies(page = currentPage)
         fetchMoviesMutableLiveData.postValue(parseData)
     }
 }

@@ -14,7 +14,7 @@ class AllTvShowsRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<Rec
     var onTvShowsClickListener: (MoviesDataModel) -> Unit = { }
 
     fun setTvSHows(groups: MutableList<MoviesDataModel>) {
-        this.tvSHowsList = groups
+        this.tvSHowsList.addAll(groups)
         notifyDataSetChanged()
     }
 

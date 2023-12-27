@@ -8,13 +8,15 @@ import com.a1hd.movies.ui.repository.MoviesDataModel
 import com.a1hd.movies.ui.sections.allmovies.adapter.holder.AllMoviesHolder
 import javax.inject.Inject
 
-class AllMoviesRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class AllMoviesRecyclerAdapter @Inject constructor(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var moviesList: MutableList<MoviesDataModel> = mutableListOf()
+    private var isLoaderAdded: Boolean = false
+
     var onMovieClickListener: (MoviesDataModel) -> Unit = { }
 
     fun setMovies(groups: MutableList<MoviesDataModel>) {
-        this.moviesList = groups
+        this.moviesList.addAll(groups)
         notifyDataSetChanged()
     }
 
