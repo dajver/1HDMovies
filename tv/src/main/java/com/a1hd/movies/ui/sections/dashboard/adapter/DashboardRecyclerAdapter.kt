@@ -1,7 +1,6 @@
 package com.a1hd.movies.ui.sections.dashboard.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.a1hd.movies.databinding.ItemDashboardBinding
@@ -25,11 +24,9 @@ class DashboardRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<Recy
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val holder = (holder as DashboardHolder)
-        val isNotVisible = position > 0 && moviesList[position - 1].type == moviesList[position].type
-        holder.bind(moviesList[position], onMovieClickListener)
-        holder.showTitle(!isNotVisible)
-        holder.itemView.setOnFocusChangeListener { v, hasFocus ->
+        val viewHolder = (holder as DashboardHolder)
+        viewHolder.bind(moviesList[position], onMovieClickListener)
+        viewHolder.itemView.setOnFocusChangeListener { v, hasFocus ->
             v.isSelected = hasFocus
         }
     }

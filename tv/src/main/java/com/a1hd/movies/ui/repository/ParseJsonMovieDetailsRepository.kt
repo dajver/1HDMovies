@@ -1,6 +1,5 @@
 package com.a1hd.movies.ui.repository
 
-import android.annotation.SuppressLint
 import com.a1hd.movies.etc.extensions.io
 import org.jsoup.Jsoup
 import javax.inject.Inject
@@ -28,7 +27,7 @@ class ParseJsonMovieDetailsRepository @Inject constructor() {
         val release = if (ratingAndOther.size >= 5) ratingAndOther[5] else ""
         val production = if (ratingAndOther.size >= 6) ratingAndOther[6] else ""
         if (type == MovieType.TV_SHOW) {
-
+            // TODO: add list to tv show episodes
         }
         val movieDetailsModel = MoviesDetailsDataModel(title, thumbnail, link, type, description, quality, cast, genre, duration, country, imdb, release, production)
         movieDetailsModel

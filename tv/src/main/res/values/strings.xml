@@ -3,7 +3,9 @@
     <string name="back_button_double_click_text">Please click BACK again to exit</string>
     <string name="available_source">Available source %d, m3u8 livestream</string>
     <string name="sources_to_play">Source urls to play</string>
+    <string name="top_movies">Top Movies</string>
     <string name="movies">Movies</string>
+    <string name="top_tv_shows">Top Tv Shows</string>
     <string name="tv_shows">Tv Shows</string>
     <string name="genres">Genres</string>
     <string name="casts">Casts</string>
@@ -14,4 +16,6 @@
     <string name="production">Production</string>
     <string name="min">min %s</string>
     <string name="watch_movie">Watch Movie</string>
+    <string name="all_movies">All Movies</string>
+    <string name="all_tv_shows">All Tv Shows</string>
 </resources>
