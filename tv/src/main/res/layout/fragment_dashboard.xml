@@ -35,6 +35,7 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:focusable="true"
+                android:focusedByDefault="true"
                 android:padding="10dp"
                 android:src="@drawable/home_button_selected" />
 
