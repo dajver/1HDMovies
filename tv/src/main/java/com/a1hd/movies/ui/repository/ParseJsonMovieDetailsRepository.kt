@@ -6,6 +6,11 @@ import javax.inject.Inject
 
 class ParseJsonMovieDetailsRepository @Inject constructor() {
 
+    // EXAMPLE
+    // Doctor WHO
+    // https://1hd.to/series/watch-doctor-who-online-39521 - link to TV Show on the web page
+    // https://1hd.sx/ajax/movie/seasons/39521 - 39521 is ID of the link to TV Show seasons
+    // https://1hd.sx/ajax/movie/season/episodes/250 - 250 is ID for the season from previous request for /seasons
     suspend fun fetchDetails(url: String): MoviesDetailsDataModel = io {
         val linkToMovie = if (url.startsWith("https://1hd")) url else "https://1hd.to/$url"
 //doc.select("div.film-episodes").select("div.film-episodes").textNodes()

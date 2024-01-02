@@ -5,8 +5,8 @@
     <string name="sources_to_play">Source urls to play</string>
     <string name="top_movies">Top Movies</string>
     <string name="movies">Movies</string>
-    <string name="top_tv_shows">Top Tv Shows</string>
-    <string name="tv_shows">Tv Shows</string>
+    <string name="top_tv_shows">Top TV Shows</string>
+    <string name="tv_shows">TV Shows</string>
     <string name="genres">Genres</string>
     <string name="casts">Casts</string>
     <string name="duration">Duration</string>
@@ -16,6 +16,7 @@
     <string name="production">Production</string>
     <string name="min">min %s</string>
     <string name="watch_movie">Watch Movie</string>
+    <string name="watch_now">Watch Now</string>
     <string name="all_movies">All Movies</string>
     <string name="all_tv_shows">All Tv Shows</string>
 </resources>

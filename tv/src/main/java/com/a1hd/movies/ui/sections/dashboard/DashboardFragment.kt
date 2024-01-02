@@ -1,6 +1,7 @@
 package com.a1hd.movies.ui.sections.dashboard
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -12,6 +13,7 @@ import com.a1hd.movies.ui.navigation.route.Router
 import com.a1hd.movies.ui.repository.MovieType
 import com.a1hd.movies.ui.repository.MoviesDataModel
 import com.a1hd.movies.ui.sections.dashboard.adapter.DashboardRecyclerAdapter
+import com.a1hd.movies.ui.sections.dashboard.viewpager.ViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -34,16 +36,29 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
     
     private val dashboardViewModel: DashboardViewModel by viewModels()
 
+    private val viewPagerAdapter: ViewPagerAdapter by lazy {
+        ViewPagerAdapter(requireContext())
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         topMoviesRecyclerAdapter.onMovieClickListener = onMovieClickListener
         topTvShowsRecyclerAdapter.onMovieClickListener = onMovieClickListener
         moviesRecyclerAdapter.onMovieClickListener = onMovieClickListener
         tvShowsRecyclerAdapter.onMovieClickListener = onMovieClickListener
+        viewPagerAdapter.onMostPopularMovieClickListener = {
+            navigationRouter.navigateTo(Router.WatchMovie(it.link, MovieType.MOVIE))
+        }
         binding.rvTopMovies.adapter = topMoviesRecyclerAdapter
         binding.rvTopTvShows.adapter = topTvShowsRecyclerAdapter
         binding.rvMovies.adapter = moviesRecyclerAdapter
         binding.rvTvShows.adapter = tvShowsRecyclerAdapter
+        binding.viewPagerMain.adapter = viewPagerAdapter
+
+        dashboardViewModel.fetchMostPopular()
+        dashboardViewModel.fetchMostPopularLiveData.observe(viewLifecycleOwner) {
+            viewPagerAdapter.setImages(it.toMutableList())
+        }
 
         dashboardViewModel.fetchDashboard()
         dashboardViewModel.fetchDashboardMoviesLiveData.observe(viewLifecycleOwner) {

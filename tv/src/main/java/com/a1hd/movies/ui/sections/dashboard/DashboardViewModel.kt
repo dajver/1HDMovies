@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.a1hd.movies.etc.extensions.launch
+import com.a1hd.movies.ui.repository.MostPopularMoviesDataModel
 import com.a1hd.movies.ui.repository.MoviesDataModel
 import com.a1hd.movies.ui.repository.ParseJsonDashboardRepository
+import com.a1hd.movies.ui.repository.ParseJsonMostPopularRepository
 import com.a1hd.movies.ui.repository.ParseJsonMoviesRepository
 import com.a1hd.movies.ui.repository.ParseJsonTvShowsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,8 +17,12 @@ import javax.inject.Inject
 class DashboardViewModel @Inject constructor(
     private val parseJsonDashboardRepository: ParseJsonDashboardRepository,
     private val parseJsonMoviesRepository: ParseJsonMoviesRepository,
-    private val parseJsonTvShowsRepository: ParseJsonTvShowsRepository
+    private val parseJsonTvShowsRepository: ParseJsonTvShowsRepository,
+    private val parseJsonMostPopularRepository: ParseJsonMostPopularRepository
 ): ViewModel() {
+
+    private val fetchMostPopularMutableLiveData = MutableLiveData<List<MostPopularMoviesDataModel>>()
+    val fetchMostPopularLiveData: LiveData<List<MostPopularMoviesDataModel>> = fetchMostPopularMutableLiveData
 
     private val fetchDashboardMoviesMutableLiveData = MutableLiveData<List<MoviesDataModel>>()
     val fetchDashboardMoviesLiveData: LiveData<List<MoviesDataModel>> = fetchDashboardMoviesMutableLiveData
@@ -26,6 +32,11 @@ class DashboardViewModel @Inject constructor(
 
     private val fetchTvShowsMutableLiveData = MutableLiveData<List<MoviesDataModel>>()
     val fetchTvShowsLiveData: LiveData<List<MoviesDataModel>> = fetchTvShowsMutableLiveData
+
+    fun fetchMostPopular() = launch {
+        val parseData = parseJsonMostPopularRepository.fetchMostPopular()
+        fetchMostPopularMutableLiveData.postValue(parseData)
+    }
 
     fun fetchDashboard() = launch {
         val parseData = parseJsonDashboardRepository.fetchDashboard()
