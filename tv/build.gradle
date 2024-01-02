@@ -45,6 +45,7 @@ dependencies {
     implementation "androidx.preference:preference-ktx:1.2.1"
     implementation 'com.google.android.gms:play-services-wearable:18.1.0'
     implementation 'com.google.android.material:material:1.11.0'
+    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.9'
 
     // contains viewModels() delegate
     implementation "androidx.fragment:fragment-ktx:1.6.2"

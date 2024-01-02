@@ -63,6 +63,7 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
         dashboardViewModel.fetchDashboard()
         dashboardViewModel.fetchDashboardMoviesLiveData.observe(viewLifecycleOwner) {
             binding.pbProgress.isVisible = false
+            binding.llMenu.isVisible = true
             binding.nsMoviesList.isVisible = true
 
             topMoviesRecyclerAdapter.setMovies(it.filter { it.type == MovieType.MOVIE }.toMutableList())
@@ -82,6 +83,8 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
             tvShowsList.add(0, allTvShowsPlaceHolder())
             tvShowsRecyclerAdapter.setMovies(tvShowsList)
         }
+
+        setupListeners()
     }
 
     private val onMovieClickListener: (MoviesDataModel) -> Unit = {
@@ -93,6 +96,16 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
             }
         } else {
             navigationRouter.navigateTo(Router.MovieDetails(it.link))
+        }
+    }
+
+    private fun setupListeners() {
+        binding.btnHome.setOnClickListener {
+            navigationRouter.navigateTo(Router.Dashboard)
+        }
+
+        binding.btnSearch.setOnClickListener {
+            navigationRouter.navigateTo(Router.Search)
         }
     }
 

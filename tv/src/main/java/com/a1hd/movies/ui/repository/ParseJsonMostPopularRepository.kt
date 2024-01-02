@@ -17,7 +17,7 @@ class ParseJsonMostPopularRepository @Inject constructor() {
             val quality = qualityAndYear.getOrNull(i)
             val type = qualityAndYear.getOrNull(i + 1)
             val year = qualityAndYear.getOrNull(i + 2)
-            qualities.add("$quality,$type,$year")
+            qualities.add("$quality, $type, $year")
         }
         val names = movieDetailsContainer.select("a").eachAttr("title")
         val descriptions = movieDetailsContainer.select("p.description").textNodes()
