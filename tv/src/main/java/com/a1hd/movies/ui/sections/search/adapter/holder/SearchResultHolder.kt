@@ -2,7 +2,7 @@ package com.a1hd.movies.ui.sections.search.adapter.holder
 
 import androidx.recyclerview.widget.RecyclerView
 import com.a1hd.movies.databinding.ItemDashboardBinding
-import com.a1hd.movies.ui.repository.MoviesDataModel
+import com.a1hd.movies.api.repository.MoviesDataModel
 import com.bumptech.glide.Glide
 
 class SearchResultHolder(private val binding: ItemDashboardBinding) : RecyclerView.ViewHolder(binding.root) {

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.a1hd.movies.databinding.ItemDashboardBinding
-import com.a1hd.movies.ui.repository.MoviesDataModel
+import com.a1hd.movies.api.repository.MoviesDataModel
 import com.a1hd.movies.ui.sections.alltvshows.adapter.holder.AllTvShowsHolder
 import javax.inject.Inject
 

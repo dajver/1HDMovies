@@ -3,7 +3,7 @@ package com.a1hd.movies.ui.sections.dashboard.adapter.holders
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.a1hd.movies.databinding.ItemDashboardBinding
-import com.a1hd.movies.ui.repository.MoviesDataModel
+import com.a1hd.movies.api.repository.MoviesDataModel
 import com.bumptech.glide.Glide
 
 class DashboardHolder(private val binding: ItemDashboardBinding) : RecyclerView.ViewHolder(binding.root) {

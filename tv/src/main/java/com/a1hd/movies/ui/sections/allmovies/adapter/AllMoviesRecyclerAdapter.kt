@@ -4,14 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.a1hd.movies.databinding.ItemDashboardBinding
-import com.a1hd.movies.ui.repository.MoviesDataModel
+import com.a1hd.movies.api.repository.MoviesDataModel
 import com.a1hd.movies.ui.sections.allmovies.adapter.holder.AllMoviesHolder
 import javax.inject.Inject
 
 class AllMoviesRecyclerAdapter @Inject constructor(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var moviesList: MutableList<MoviesDataModel> = mutableListOf()
-    private var isLoaderAdded: Boolean = false
 
     var onMovieClickListener: (MoviesDataModel) -> Unit = { }
 

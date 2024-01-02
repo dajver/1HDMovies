@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.a1hd.movies.etc.extensions.launch
-import com.a1hd.movies.ui.repository.MostPopularMoviesDataModel
-import com.a1hd.movies.ui.repository.MoviesDataModel
-import com.a1hd.movies.ui.repository.ParseJsonDashboardRepository
-import com.a1hd.movies.ui.repository.ParseJsonMostPopularRepository
-import com.a1hd.movies.ui.repository.ParseJsonMoviesRepository
-import com.a1hd.movies.ui.repository.ParseJsonTvShowsRepository
+import com.a1hd.movies.api.repository.MostPopularMoviesDataModel
+import com.a1hd.movies.api.repository.MoviesDataModel
+import com.a1hd.movies.api.repository.ParseJsonDashboardRepository
+import com.a1hd.movies.api.repository.ParseJsonMostPopularRepository
+import com.a1hd.movies.api.repository.ParseJsonMoviesRepository
+import com.a1hd.movies.api.repository.ParseJsonTvShowsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.a1hd.movies.ui.repository
+package com.a1hd.movies.api.repository
 
 import com.a1hd.movies.etc.extensions.io
 import org.jsoup.Jsoup

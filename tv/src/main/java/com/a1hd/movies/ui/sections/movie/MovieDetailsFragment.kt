@@ -5,15 +5,25 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.a1hd.movies.R
+import com.a1hd.movies.api.repository.MovieType
 import com.a1hd.movies.databinding.FragmentMovieDetailsBinding
 import com.a1hd.movies.ui.base.BaseFragment
 import com.a1hd.movies.ui.navigation.route.Router
-import com.a1hd.movies.ui.repository.MoviesDetailsDataModel
+import com.a1hd.movies.api.repository.MoviesDetailsDataModel
+import com.a1hd.movies.ui.sections.movie.adapter.episodes.EpisodesRecyclerAdapter
+import com.a1hd.movies.ui.sections.movie.adapter.season.SeasonsRecyclerAdapter
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding>(FragmentMovieDetailsBinding::inflate) {
+
+    @Inject
+    lateinit var seasonsRecyclerAdapter: SeasonsRecyclerAdapter
+
+    @Inject
+    lateinit var episodesRecyclerAdapter: EpisodesRecyclerAdapter
 
     private val movieDetailsViewModel: MovieDetailsViewModel by viewModels()
 
@@ -33,6 +43,15 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding>(FragmentMo
             throw RuntimeException("movieUrl mustn't be null or empty")
         }
 
+        seasonsRecyclerAdapter.onSeasonClickListener = {
+            episodesRecyclerAdapter.setEpisodes(it.episodes)
+        }
+        episodesRecyclerAdapter.onEpisodeClickListener = {
+            navigationRouter.navigateTo(Router.WatchMovie(it.link, MovieType.TV_SHOW))
+        }
+        binding.rvSeasons.adapter = seasonsRecyclerAdapter
+        binding.rvEpisode.adapter = episodesRecyclerAdapter
+
         movieDetailsViewModel.fetchDetails(movieUrl!!)
         movieDetailsViewModel.fetchDetailsMoviesLiveData.observe(viewLifecycleOwner) {
             binding.pbProgress.isVisible = false
@@ -48,6 +67,20 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding>(FragmentMo
             binding.tvRelease.text = it.release
             binding.tvProduction.text = it.production
             Glide.with(requireContext()).load(it.thumbnail).into(binding.ivPoster)
+
+            binding.btnWatchMovie.isVisible = it.seasonsList.isNullOrEmpty()
+            binding.rvSeasons.isVisible = !it.seasonsList.isNullOrEmpty()
+            binding.rvEpisode.isVisible = !it.seasonsList?.lastOrNull()?.episodes.isNullOrEmpty()
+
+            val seasons = it.seasonsList
+            if (!seasons.isNullOrEmpty()) {
+                seasonsRecyclerAdapter.setSeasons(seasons)
+
+                val episodes = seasons.lastOrNull()?.episodes
+                if (!episodes.isNullOrEmpty()) {
+                    episodesRecyclerAdapter.setEpisodes(episodes)
+                }
+            }
 
             movieDetailsModel = it
         }

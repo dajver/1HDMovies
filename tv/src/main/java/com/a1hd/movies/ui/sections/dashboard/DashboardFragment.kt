@@ -10,8 +10,8 @@ import com.a1hd.movies.ui.base.BaseFragment
 import com.a1hd.movies.databinding.FragmentDashboardBinding
 import com.a1hd.movies.ui.navigation.NavigationRouter
 import com.a1hd.movies.ui.navigation.route.Router
-import com.a1hd.movies.ui.repository.MovieType
-import com.a1hd.movies.ui.repository.MoviesDataModel
+import com.a1hd.movies.api.repository.MovieType
+import com.a1hd.movies.api.repository.MoviesDataModel
 import com.a1hd.movies.ui.sections.dashboard.adapter.DashboardRecyclerAdapter
 import com.a1hd.movies.ui.sections.dashboard.viewpager.ViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint

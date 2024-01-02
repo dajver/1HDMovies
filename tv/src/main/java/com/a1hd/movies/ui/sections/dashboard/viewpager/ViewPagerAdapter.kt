@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.viewpager.widget.PagerAdapter
 import com.a1hd.movies.databinding.ItemMostPopularBinding
-import com.a1hd.movies.ui.repository.MostPopularMoviesDataModel
+import com.a1hd.movies.api.repository.MostPopularMoviesDataModel
 import com.bumptech.glide.Glide
 
 internal class ViewPagerAdapter(private val context: Context) : PagerAdapter() {

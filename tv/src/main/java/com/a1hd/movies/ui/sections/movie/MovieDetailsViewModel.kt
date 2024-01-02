@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.a1hd.movies.etc.extensions.launch
-import com.a1hd.movies.ui.repository.MoviesDetailsDataModel
-import com.a1hd.movies.ui.repository.ParseJsonMovieDetailsRepository
+import com.a1hd.movies.api.repository.MoviesDetailsDataModel
+import com.a1hd.movies.api.repository.ParseJsonMovieDetailsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

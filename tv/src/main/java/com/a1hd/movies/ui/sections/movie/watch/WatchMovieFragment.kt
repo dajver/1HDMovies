@@ -5,7 +5,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import com.a1hd.movies.databinding.FragmentWatchMovieBinding
 import com.a1hd.movies.ui.base.BaseFragment
-import com.a1hd.movies.ui.repository.MovieType
+import com.a1hd.movies.api.repository.MovieType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
