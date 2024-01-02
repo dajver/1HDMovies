@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ivPoster"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_poster" />
+
+    <LinearLayout
+        android:id="@+id/llContainer"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/transparent_background"
+        android:layout_gravity="center_vertical"
+        android:padding="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvQuality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="@android:color/transparent"
+            tools:text="HD, Movie, 2023" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/white"
+            android:textSize="28sp"
+            tools:text="Five Nights With Freddy" />
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:maxLines="4"
+            android:ellipsize="end"
+            android:background="@android:color/transparent"
+            tools:text="Five Nights With Freddy Description Five Nights With Freddy Description Five Nights With Freddy Description Five Nights With Freddy Description Five Nights With Freddy Description" />
+
+        <Button
+            android:id="@+id/btnWatchMovie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_selected_background"
+            android:focusable="true"
+            android:padding="10dp"
+            android:text="@string/watch_now" />
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -11,7 +11,7 @@
 
     </FrameLayout>
 
-    <com.a1hd.movies.views.CursorLayout
+    <com.a1hd.movies.ui.views.CursorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -37,6 +37,6 @@
         </LinearLayout>
 
 
-    </com.a1hd.movies.views.CursorLayout>
+    </com.a1hd.movies.ui.views.CursorLayout>
 
 </FrameLayout>

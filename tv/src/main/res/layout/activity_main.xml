@@ -3,23 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.a1hd.movies.views.VideoWebView
-        android:id="@+id/webView"
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-    <FrameLayout
-        android:id="@+id/fullscreen_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible" />
-
-    <ProgressBar
-        android:id="@+id/pbLoadingSources"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminateTint="@color/background_gradient_end"
-        android:visibility="gone" />
 
 </FrameLayout>
