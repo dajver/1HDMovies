@@ -47,7 +47,7 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
         moviesRecyclerAdapter.onMovieClickListener = onMovieClickListener
         tvShowsRecyclerAdapter.onMovieClickListener = onMovieClickListener
         viewPagerAdapter.onMostPopularMovieClickListener = {
-            navigationRouter.navigateTo(Router.WatchMovie(it.link, MovieType.MOVIE))
+            navigationRouter.navigateTo(Router.WatchMovie(it.link))
         }
         binding.rvTopMovies.adapter = topMoviesRecyclerAdapter
         binding.rvTopTvShows.adapter = topTvShowsRecyclerAdapter

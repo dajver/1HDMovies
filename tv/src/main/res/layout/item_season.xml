@@ -13,7 +13,6 @@
         android:padding="10dp"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        android:textStyle="bold"
         tools:text="Season 1" />
 
 </LinearLayout>

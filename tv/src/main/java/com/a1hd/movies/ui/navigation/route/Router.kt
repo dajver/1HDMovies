@@ -14,7 +14,7 @@ sealed class Router(val clearStack: Boolean = false) {
     object Splash : Router(clearStack = true)
     object Dashboard : Router(clearStack = true)
     class MovieDetails(val movieUrl: String?) : Router()
-    class WatchMovie(val movieUrl: String?, val movieType: MovieType?) : Router()
+    class WatchMovie(val movieUrl: String?) : Router()
     object AllMovies : Router()
     object AllTvShows : Router()
     object Search : Router()
@@ -25,7 +25,7 @@ fun Router.toFragment(): Fragment {
         Router.Splash -> SplashFragment()
         Router.Dashboard -> DashboardFragment()
         is Router.MovieDetails -> MovieDetailsFragment.newInstance(movieUrl)
-        is Router.WatchMovie -> WatchMovieFragment.newInstance(movieUrl, movieType)
+        is Router.WatchMovie -> WatchMovieFragment.newInstance(movieUrl)
         Router.AllMovies -> AllMoviesFragment()
         Router.AllTvShows -> AllTvShowsFragment()
         Router.Search -> SearchFragment()
@@ -37,7 +37,7 @@ fun Fragment.toRouter(): Router {
         is SplashFragment -> Router.Splash
         is DashboardFragment -> Router.Dashboard
         is MovieDetailsFragment -> Router.MovieDetails(movieUrl)
-        is WatchMovieFragment -> Router.WatchMovie(movieUrl, movieType)
+        is WatchMovieFragment -> Router.WatchMovie(movieUrl)
         is AllMoviesFragment -> Router.AllMovies
         is AllTvShowsFragment -> Router.AllTvShows
         is SearchFragment -> Router.Search

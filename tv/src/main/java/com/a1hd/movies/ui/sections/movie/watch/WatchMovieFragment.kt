@@ -12,13 +12,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class WatchMovieFragment: BaseFragment<FragmentWatchMovieBinding>(FragmentWatchMovieBinding::inflate) {
 
     var movieUrl: String? = null
-    var movieType: MovieType? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             movieUrl = it.getString(ARG_MOVIE_URL, "")
-            movieType = it.getSerializable(ARG_MOVIE_TYPE) as MovieType
         }
     }
 
@@ -38,21 +36,17 @@ class WatchMovieFragment: BaseFragment<FragmentWatchMovieBinding>(FragmentWatchM
         binding.webView.sourcesLisFetchingLiveData.observe(viewLifecycleOwner) {
             binding.pbLoadingSources.isVisible = it
         }
-
-        binding.vBackground.isVisible = movieType == MovieType.MOVIE
     }
 
     companion object {
 
         private const val ARG_MOVIE_URL = "ARG_MOVIE_URL"
-        private const val ARG_MOVIE_TYPE = "ARG_MOVIE_TYPE"
 
         @JvmStatic
-        fun newInstance(movieUrl: String?, type: MovieType?): WatchMovieFragment {
+        fun newInstance(movieUrl: String?): WatchMovieFragment {
             val fragment = WatchMovieFragment()
             fragment.arguments = Bundle().apply {
                 putString(ARG_MOVIE_URL, movieUrl)
-                putSerializable(ARG_MOVIE_TYPE, type)
             }
             return fragment
         }

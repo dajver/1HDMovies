@@ -4,6 +4,7 @@
     android:layout_width="200dp"
     android:layout_height="wrap_content"
     android:background="@drawable/item_selected_background"
+    android:padding="10dp"
     android:orientation="vertical">
 
     <TextView
@@ -11,7 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:padding="10dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         android:textColor="@android:color/white"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -24,6 +26,7 @@
         android:background="@android:color/transparent"
         android:ellipsize="end"
         android:maxLines="1"
+        android:layout_marginTop="10dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:textColor="@android:color/white"

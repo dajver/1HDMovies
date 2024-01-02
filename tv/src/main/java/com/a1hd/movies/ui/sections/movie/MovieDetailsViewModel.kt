@@ -17,8 +17,27 @@ class MovieDetailsViewModel @Inject constructor(
     private val fetchDetailsMoviesMutableLiveData = MutableLiveData<MoviesDetailsDataModel>()
     val fetchDetailsMoviesLiveData: LiveData<MoviesDetailsDataModel> = fetchDetailsMoviesMutableLiveData
 
+    private var moviesDetailsDataModel: MoviesDetailsDataModel? = null
+
     fun fetchDetails(html: String) = launch {
-        val details = parseJsonMovieDetailsRepository.fetchDetails(html)
-        fetchDetailsMoviesMutableLiveData.postValue(details)
+        if (moviesDetailsDataModel == null) {
+            moviesDetailsDataModel = parseJsonMovieDetailsRepository.fetchDetails(html)
+        }
+
+        val seasons = moviesDetailsDataModel?.seasonsList
+        if (!seasons.isNullOrEmpty()) {
+            if (seasons.firstOrNull { it.isSelected } != null ) return@launch
+
+            seasons.onEach { it.isSelected = false }
+            seasons.lastOrNull()?.isSelected = true
+
+            val episodes = seasons.lastOrNull()?.episodes
+            if (!episodes.isNullOrEmpty()) {
+                episodes.onEach { it.isSelected = false }
+                episodes.firstOrNull()?.isSelected = true
+            }
+        }
+
+        fetchDetailsMoviesMutableLiveData.postValue(moviesDetailsDataModel!!)
     }
 }

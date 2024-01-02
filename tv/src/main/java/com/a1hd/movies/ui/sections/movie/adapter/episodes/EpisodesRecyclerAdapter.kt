@@ -1,5 +1,7 @@
 package com.a1hd.movies.ui.sections.movie.adapter.episodes
 
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -25,9 +27,28 @@ class EpisodesRecyclerAdapter @Inject constructor(): RecyclerView.Adapter<Recycl
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewHolder = (holder as EpisodesHolder)
-        viewHolder.bind(episodesList[position], onEpisodeClickListener)
+        val model = episodesList[position]
+        viewHolder.bind(model)
+
+        holder.itemView.isFocusedByDefault = true
+        holder.itemView.isSelected = model.isSelected
+        viewHolder.select(model.isSelected, model)
+
         viewHolder.itemView.setOnFocusChangeListener { v, hasFocus ->
             v.isSelected = hasFocus
+            viewHolder.select(hasFocus, model)
+        }
+
+        holder.itemView.setOnClickListener {
+            episodesList.onEach { it.isSelected = false }
+            model.isSelected = true
+            episodesList.forEachIndexed { index, _ ->
+                notifyItemChanged(index)
+            }
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                onEpisodeClickListener.invoke(model)
+            }, 500)
         }
     }
 

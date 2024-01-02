@@ -98,10 +98,14 @@ data class MovieSeasonDataModel(
     val seasonId: String,
     val seasonNumber: String,
     val episodes: MutableList<MovieEpisodesDataModel>
-)
+) {
+    var isSelected: Boolean = false
+}
 
 data class MovieEpisodesDataModel(
     val episodeNumber: String,
     val episodeName: String,
     val link: String
-)
+) {
+    var isSelected: Boolean = false
+}

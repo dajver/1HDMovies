@@ -1,5 +1,7 @@
 package com.a1hd.movies.ui.sections.movie.adapter.season
 
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -25,9 +27,21 @@ class SeasonsRecyclerAdapter @Inject constructor(): RecyclerView.Adapter<Recycle
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewHolder = (holder as SeasonsHolder)
-        viewHolder.bind(seasonsList[position], onSeasonClickListener)
+        val model = seasonsList[position]
+        viewHolder.bind(model)
+
         viewHolder.itemView.setOnFocusChangeListener { v, hasFocus ->
             v.isSelected = hasFocus
+            viewHolder.select(hasFocus, model)
+        }
+
+        holder.itemView.setOnClickListener {
+            seasonsList.onEach { it.isSelected = false }
+            model.isSelected = true
+            seasonsList.forEachIndexed { index, _ ->
+                notifyItemChanged(index)
+            }
+            onSeasonClickListener.invoke(model)
         }
     }
 
