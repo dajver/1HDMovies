@@ -100,12 +100,13 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
     }
 
     private fun setupListeners() {
-        binding.btnHome.setOnClickListener {
-            navigationRouter.navigateTo(Router.Dashboard)
-        }
-
+        binding.btnHome.restoreDefaultFocus()
         binding.btnSearch.setOnClickListener {
             navigationRouter.navigateTo(Router.Search)
+        }
+
+        binding.btnFavorites.setOnClickListener {
+            navigationRouter.navigateTo(Router.Favorites)
         }
     }
 

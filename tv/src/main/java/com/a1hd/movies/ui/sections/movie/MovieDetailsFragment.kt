@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.a1hd.movies.R
+import com.a1hd.movies.api.repository.MoviesDetailsDataModel
 import com.a1hd.movies.databinding.FragmentMovieDetailsBinding
 import com.a1hd.movies.ui.base.BaseFragment
 import com.a1hd.movies.ui.navigation.route.Router
@@ -83,6 +84,20 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding>(FragmentMo
             binding.btnWatchMovie.setOnClickListener {
                 navigationRouter.navigateTo(Router.WatchMovie(movie.link))
             }
+
+            addFavoriteButtonState(movie)
+            binding.btnFavorites.setOnClickListener {
+                movieDetailsViewModel.favorite(movie)
+                addFavoriteButtonState(movie)
+            }
+        }
+    }
+
+    private fun addFavoriteButtonState(movie: MoviesDetailsDataModel) {
+        binding.btnFavorites.text = if (movieDetailsViewModel.hasMovie(movie)) {
+            getString(R.string.remove_favorites)
+        } else {
+            getString(R.string.add_favorites)
         }
     }
 

@@ -6,12 +6,14 @@ import androidx.lifecycle.ViewModel
 import com.a1hd.movies.etc.extensions.launch
 import com.a1hd.movies.api.repository.MoviesDetailsDataModel
 import com.a1hd.movies.api.repository.ParseJsonMovieDetailsRepository
+import com.a1hd.movies.ui.sections.favorite.repository.FavoriteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieDetailsViewModel @Inject constructor(
-    private val parseJsonMovieDetailsRepository: ParseJsonMovieDetailsRepository
+    private val parseJsonMovieDetailsRepository: ParseJsonMovieDetailsRepository,
+    private val favoriteRepository: FavoriteRepository
 ): ViewModel() {
 
     private val fetchDetailsMoviesMutableLiveData = MutableLiveData<MoviesDetailsDataModel>()
@@ -39,5 +41,13 @@ class MovieDetailsViewModel @Inject constructor(
         }
 
         fetchDetailsMoviesMutableLiveData.postValue(moviesDetailsDataModel!!)
+    }
+
+    fun favorite(movie: MoviesDetailsDataModel) {
+        favoriteRepository.favorite(movie)
+    }
+
+    fun hasMovie(movie: MoviesDetailsDataModel): Boolean {
+        return favoriteRepository.hasMovie(movie)
     }
 }

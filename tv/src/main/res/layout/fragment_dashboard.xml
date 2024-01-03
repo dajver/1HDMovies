@@ -21,7 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -34,8 +35,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:focusable="true"
                 android:focusedByDefault="true"
+                android:focusable="true"
                 android:padding="10dp"
                 android:src="@drawable/home_button_selected" />
 
@@ -47,6 +48,15 @@
                 android:focusable="true"
                 android:padding="10dp"
                 android:src="@drawable/search_button_selected" />
+
+            <ImageButton
+                android:id="@+id/btnFavorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:focusable="true"
+                android:padding="10dp"
+                android:src="@drawable/favorites_button_selected" />
 
         </LinearLayout>
 

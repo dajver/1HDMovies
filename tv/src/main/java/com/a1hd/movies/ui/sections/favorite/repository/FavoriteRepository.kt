@@ -1,0 +1,46 @@
+package com.a1hd.movies.ui.sections.favorite.repository
+
+import android.content.SharedPreferences
+import com.a1hd.movies.api.repository.MoviesDetailsDataModel
+import com.a1hd.movies.etc.extensions.mutableList
+import com.google.gson.Gson
+import javax.inject.Inject
+import javax.inject.Singleton
+
+private const val FAVORITE_LIST = "FAVORITE_LIST"
+
+@Singleton
+class FavoriteRepository @Inject constructor(prefs: SharedPreferences, gson: Gson) {
+
+    private var favorites: MutableList<MoviesDetailsDataModel> by prefs.mutableList(FAVORITE_LIST, gson, "")
+
+    fun fetchAllFavorites(): MutableList<MoviesDetailsDataModel> {
+        return favorites
+    }
+
+    fun favorite(movie: MoviesDetailsDataModel) {
+        if (hasMovie(movie)) {
+            remove(movie)
+        } else {
+            save(movie)
+        }
+    }
+
+    fun hasMovie(movie: MoviesDetailsDataModel): Boolean {
+        return favorites.contains(movie)
+    }
+
+    private fun save(movie: MoviesDetailsDataModel) {
+        val favoritesList = mutableListOf<MoviesDetailsDataModel>()
+        favoritesList.addAll(favorites)
+        favoritesList.add(movie)
+        favorites = favoritesList
+    }
+
+    private fun remove(movie: MoviesDetailsDataModel) {
+        val favoritesList = mutableListOf<MoviesDetailsDataModel>()
+        favoritesList.addAll(favorites)
+        favoritesList.remove(movie)
+        favorites = favoritesList
+    }
+}

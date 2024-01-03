@@ -235,15 +235,33 @@
 
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/btnWatchMovie"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:background="@drawable/button_selected_background"
-                        android:focusable="true"
-                        android:padding="10dp"
-                        android:text="@string/watch_movie" />
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnFavorites"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/button_orange_background"
+                            android:focusable="true"
+                            android:padding="10dp"
+                            android:text="@string/add_favorites" />
+
+                        <Button
+                            android:id="@+id/btnWatchMovie"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/button_blue_background"
+                            android:focusable="true"
+                            android:padding="10dp"
+                            android:text="@string/watch_movie" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

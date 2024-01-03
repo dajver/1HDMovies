@@ -56,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/button_selected_background"
+            android:background="@drawable/button_blue_background"
             android:focusable="true"
             android:padding="10dp"
             android:text="@string/watch_now" />
