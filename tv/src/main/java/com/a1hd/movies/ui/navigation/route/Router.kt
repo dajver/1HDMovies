@@ -1,7 +1,6 @@
 package com.a1hd.movies.ui.navigation.route
 
 import androidx.fragment.app.Fragment
-import com.a1hd.movies.api.repository.MovieType
 import com.a1hd.movies.ui.sections.dashboard.DashboardFragment
 import com.a1hd.movies.ui.sections.SplashFragment
 import com.a1hd.movies.ui.sections.allmovies.AllMoviesFragment

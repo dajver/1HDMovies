@@ -1,5 +1,7 @@
 package com.a1hd.movies.ui.sections.movie.watch
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
@@ -32,6 +34,12 @@ class WatchMovieFragment: BaseFragment<FragmentWatchMovieBinding>(FragmentWatchM
         binding.webView.setFullScreenView(requireActivity().actionBar, binding.fullscreenView)
         binding.webView.sourcesListLiveData.observe(viewLifecycleOwner) {
             binding.webView.ivSourceAvailable.isVisible = it.isNotEmpty()
+
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(it.first())
+            startActivity(intent)
+
+            navigationRouter.navigateBack()
         }
         binding.webView.sourcesLisFetchingLiveData.observe(viewLifecycleOwner) {
             binding.pbLoadingSources.isVisible = it
