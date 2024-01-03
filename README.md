@@ -6,7 +6,7 @@
 This app is not official. It was made by me for my own usage on the Android TV, so all problems and issues which is in, made in purpose or because I'm lazy. But I will improve that product for usage when this bugs will be found.
 
 ## App screenshots
-<img src=https://i.postimg.cc/9rdb2bJ2/Screenshot-20240103-144105.png /> <img src=https://i.postimg.cc/75XNGLFQ/Screenshot-20240103-144117.png /> <img src=https://i.postimg.cc/xkC3K2Yj/Screenshot-20240103-144137.png />
+<img src=https://github.com/dajver/1HDMovies/blob/main/preview/Screenshot_20240103_144105.png /> <img src=https://github.com/dajver/1HDMovies/blob/main/preview/Screenshot_20240103_144117.png /> <img src=https://github.com/dajver/1HDMovies/blob/main/preview/Screenshot_20240103_144137.png />
 
 
 **So, what can I do with this app?**
