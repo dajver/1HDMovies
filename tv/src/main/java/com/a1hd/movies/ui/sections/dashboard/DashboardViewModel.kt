@@ -33,23 +33,37 @@ class DashboardViewModel @Inject constructor(
     private val fetchTvShowsMutableLiveData = MutableLiveData<List<MoviesDataModel>>()
     val fetchTvShowsLiveData: LiveData<List<MoviesDataModel>> = fetchTvShowsMutableLiveData
 
+    private var mostPopularMovies = emptyList<MostPopularMoviesDataModel>()
+    private var dashboardMovies = emptyList<MoviesDataModel>()
+    private var allMoviesList = emptyList<MoviesDataModel>()
+    private var allTvShowsList = emptyList<MoviesDataModel>()
+
+
     fun fetchMostPopular() = launch {
-        val parseData = parseJsonMostPopularRepository.fetchMostPopular()
-        fetchMostPopularMutableLiveData.postValue(parseData)
+        if (mostPopularMovies.isEmpty()) {
+            mostPopularMovies = parseJsonMostPopularRepository.fetchMostPopular()
+        }
+        fetchMostPopularMutableLiveData.postValue(mostPopularMovies)
     }
 
     fun fetchDashboard() = launch {
-        val parseData = parseJsonDashboardRepository.fetchDashboard()
-        fetchDashboardMoviesMutableLiveData.postValue(parseData)
+        if (dashboardMovies.isEmpty()) {
+            dashboardMovies = parseJsonDashboardRepository.fetchDashboard()
+        }
+        fetchDashboardMoviesMutableLiveData.postValue(dashboardMovies)
     }
 
     fun fetchMovies() = launch {
-        val parseData = parseJsonMoviesRepository.fetchMovies(page = 1)
-        fetchMoviesMutableLiveData.postValue(parseData)
+        if (allMoviesList.isEmpty()) {
+            allMoviesList = parseJsonMoviesRepository.fetchMovies(page = 1)
+        }
+        fetchMoviesMutableLiveData.postValue(allMoviesList)
     }
 
     fun fetchTvShows() = launch {
-        val parseData = parseJsonTvShowsRepository.fetchTvShows(page = 1)
-        fetchTvShowsMutableLiveData.postValue(parseData)
+        if (allTvShowsList.isEmpty()) {
+            allTvShowsList = parseJsonTvShowsRepository.fetchTvShows(page = 1)
+        }
+        fetchTvShowsMutableLiveData.postValue(allTvShowsList)
     }
 }

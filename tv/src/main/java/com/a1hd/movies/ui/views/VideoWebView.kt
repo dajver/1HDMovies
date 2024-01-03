@@ -67,10 +67,6 @@ class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(c
                     handler.postDelayed({
                         if (sourceList.isNotEmpty()) {
                             sourcesListMutableLiveData.postValue(sourceList)
-
-                            val intent = Intent(Intent.ACTION_VIEW)
-                            intent.data = Uri.parse(sourceList.first())
-                            context.startActivity(intent)
                         }
                         isRequesting = false
                         sourcesListFetchingMutableLiveData.postValue(false)
