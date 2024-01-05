@@ -2,12 +2,9 @@ package com.a1hd.movies.ui.views
 
 import android.app.ActionBar
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
-import android.net.Uri
 import android.os.Handler
 import android.os.Looper
-import android.provider.Settings.Secure
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.webkit.WebResourceRequest
@@ -20,7 +17,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.a1hd.movies.client.VideoChromeClient
-import com.a1hd.movies.databinding.RwVideoWebviewBinding
+import com.a1hd.movies.databinding.ViewVideoWebviewBinding
 import com.a1hd.movies.etc.LastOpenedScreenRepository
 import com.a1hd.movies.ui.sections.select.SelectSourceSheetFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,7 +29,7 @@ class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(c
     @Inject
     lateinit var lastOpenedScreenRepository: LastOpenedScreenRepository
 
-    private var viewBinding: RwVideoWebviewBinding
+    private var viewBinding: ViewVideoWebviewBinding
     private var chromeClient: VideoChromeClient
     private val handler = Handler(Looper.getMainLooper())
     private val delayMillis: Long = 2000
@@ -46,7 +43,7 @@ class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(c
     val sourcesLisFetchingLiveData: LiveData<Boolean> = sourcesListFetchingMutableLiveData
 
     init {
-        viewBinding = RwVideoWebviewBinding.inflate(LayoutInflater.from(context), this, true)
+        viewBinding = ViewVideoWebviewBinding.inflate(LayoutInflater.from(context), this, true)
         chromeClient = VideoChromeClient(viewBinding.videoViewFrame, viewBinding.videoViewWebview)
     }
 

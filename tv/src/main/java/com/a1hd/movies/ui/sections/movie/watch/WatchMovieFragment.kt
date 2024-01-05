@@ -1,15 +1,14 @@
 package com.a1hd.movies.ui.sections.movie.watch
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.media3.common.util.UnstableApi
 import com.a1hd.movies.databinding.FragmentWatchMovieBinding
 import com.a1hd.movies.ui.base.BaseFragment
-import com.a1hd.movies.api.repository.MovieType
 import dagger.hilt.android.AndroidEntryPoint
 
+@UnstableApi
 @AndroidEntryPoint
 class WatchMovieFragment: BaseFragment<FragmentWatchMovieBinding>(FragmentWatchMovieBinding::inflate) {
 
@@ -35,12 +34,10 @@ class WatchMovieFragment: BaseFragment<FragmentWatchMovieBinding>(FragmentWatchM
         binding.webView.sourcesListLiveData.observe(viewLifecycleOwner) {
             binding.webView.ivSourceAvailable.isVisible = it.isNotEmpty()
 
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(it.first())
-            startActivity(intent)
-
+            startActivity(VideoPlayerActivity.setUrl(requireContext(), it.first()))
             navigationRouter.navigateBack()
         }
+
         binding.webView.sourcesLisFetchingLiveData.observe(viewLifecycleOwner) {
             binding.pbLoadingSources.isVisible = it
         }

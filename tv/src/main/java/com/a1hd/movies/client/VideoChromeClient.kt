@@ -16,7 +16,7 @@ class VideoChromeClient(
     private val webView: WebView
 ) : WebChromeClient() {
 
-    private val videoProgressView: View = LayoutInflater.from(container.context).inflate(R.layout.rw_video_loading, null)
+    private val videoProgressView: View = LayoutInflater.from(container.context).inflate(R.layout.view_video_loading, null)
 
     private var customView: View? = null
     private var customViewCallback: CustomViewCallback? = null
