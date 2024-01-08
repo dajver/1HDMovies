@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top|center_horizontal"
             android:background="@color/transparent_background"
+            android:padding="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -31,9 +32,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
-                android:gravity="start"
                 android:background="@android:color/transparent"
-                android:padding="10dp"
+                android:gravity="start"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 tools:text="HD" />
@@ -63,6 +63,8 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:gravity="end"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/selected_background"
                 android:textSize="14sp"
                 tools:text="SS 1 / EPS 3" />

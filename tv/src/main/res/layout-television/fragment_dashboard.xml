@@ -20,40 +20,26 @@
         android:id="@+id/llMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:visibility="gone"
         tools:visibility="visible">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <ImageButton
                 android:id="@+id/btnHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
                 android:focusedByDefault="true"
+                android:focusableInTouchMode="true"
+                android:focusable="true"
                 android:padding="10dp"
                 android:src="@drawable/home_button_selected" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="0.1" />
-
-            <ImageButton
-                android:id="@+id/btnFavorites"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:focusable="true"
-                android:padding="10dp"
-                android:src="@drawable/favorites_button_selected" />
 
             <ImageButton
                 android:id="@+id/btnSearch"
@@ -63,6 +49,15 @@
                 android:focusable="true"
                 android:padding="10dp"
                 android:src="@drawable/search_button_selected" />
+
+            <ImageButton
+                android:id="@+id/btnFavorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:focusable="true"
+                android:padding="10dp"
+                android:src="@drawable/favorites_button_selected" />
 
         </LinearLayout>
 
@@ -92,7 +87,7 @@
                     android:paddingEnd="15dp"
                     android:text="@string/top_movies"
                     android:textColor="@android:color/white"
-                    android:textSize="24sp" />
+                    android:textSize="30sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvTopMovies"
@@ -110,7 +105,7 @@
                     android:paddingEnd="15dp"
                     android:text="@string/top_tv_shows"
                     android:textColor="@android:color/white"
-                    android:textSize="24sp" />
+                    android:textSize="30sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvTopTvShows"
@@ -128,7 +123,7 @@
                     android:paddingEnd="15dp"
                     android:text="@string/movies"
                     android:textColor="@android:color/white"
-                    android:textSize="24sp" />
+                    android:textSize="30sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvMovies"
@@ -146,7 +141,7 @@
                     android:paddingEnd="15dp"
                     android:text="@string/tv_shows"
                     android:textColor="@android:color/white"
-                    android:textSize="24sp" />
+                    android:textSize="30sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvTvShows"

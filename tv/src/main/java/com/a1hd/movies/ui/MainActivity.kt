@@ -1,6 +1,9 @@
 package com.a1hd.movies.ui
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -37,6 +40,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestedOrientation = if (isTvOrientation() || isTabletOrientation()) {
+            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        } else {
+            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
         disableSSLCheck()
         navigationRouter.init(supportFragmentManager)
         navigationRouter.navigateTo(Router.Splash)
@@ -105,3 +113,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid)
     }
 }
+
+fun Context.isTvOrientation() = packageManager.hasSystemFeature("android.software.live_tv")
+
+fun Context.isTabletOrientation() =  ((resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE)
+

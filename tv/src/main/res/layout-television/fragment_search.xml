@@ -54,7 +54,7 @@
             android:nestedScrollingEnabled="true"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
+            app:spanCount="5"
             tools:listitem="@layout/item_dashboard" />
 
     </LinearLayout>
