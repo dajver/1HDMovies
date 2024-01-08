@@ -19,24 +19,42 @@
             android:scaleType="centerCrop"
             android:src="@drawable/img_poster" />
 
-        <TextView
-            android:id="@+id/tvQuality"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_weight="0.1"
+            android:layout_gravity="top|center_horizontal"
             android:background="@color/transparent_background"
-            android:gravity="start"
-            android:padding="10dp"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            tools:text="HD" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvQuality"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:gravity="start"
+                android:background="@android:color/transparent"
+                android:padding="10dp"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                tools:text="HD" />
+
+            <TextView
+                android:id="@+id/tvReleaseYear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="end"
+                android:textColor="@color/fastlane_light_background"
+                android:textSize="16sp"
+                tools:text="2023" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/transparent_background"
             android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/transparent_background"
             android:orientation="vertical">
 
             <TextView
@@ -47,7 +65,7 @@
                 android:gravity="end"
                 android:textColor="@color/selected_background"
                 android:textSize="14sp"
-                tools:text="2023" />
+                tools:text="SS 1 / EPS 3" />
 
             <TextView
                 android:id="@+id/tvName"

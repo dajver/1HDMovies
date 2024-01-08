@@ -23,6 +23,8 @@ class DashboardHolder(private val binding: ItemDashboardBinding) : RecyclerView.
         binding.tvTitle.text = movieData.name
         binding.tvOther.text = movieData.other
         binding.tvOther.isVisible = movieData.type == MovieType.TV_SHOW
+        binding.tvReleaseYear.text = movieData.other
+        binding.tvReleaseYear.isVisible = movieData.type == MovieType.MOVIE
 
         itemView.setOnClickListener {
             onStatisticsClickListener.invoke(movieData)

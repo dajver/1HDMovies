@@ -51,7 +51,7 @@ class ParseJsonMovieDetailsRepository @Inject constructor(
         val seasonIdList = doc.select("div.is-seasons").select("a").eachAttr("data-id")
         val seasonNumberList = doc.select("div.is-seasons").select("strong").textNodes()
         val seasonMutableList = mutableListOf<MovieSeasonDataModel>()
-        seasonIdList.forEachIndexed  { index, data ->
+        seasonIdList.forEachIndexed  { index, _ ->
             val seasonId = seasonIdList[index]
             val seasonNumber = seasonNumberList[index].text()
             seasonMutableList.add(MovieSeasonDataModel(seasonId, seasonNumber, getEpisodes(seasonId)))

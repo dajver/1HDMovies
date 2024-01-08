@@ -14,6 +14,8 @@ class SearchResultHolder(private val binding: ItemDashboardBinding) : RecyclerVi
         binding.tvQuality.text = movieData.quality
         binding.tvOther.text = movieData.other
         binding.tvOther.isVisible = movieData.type == MovieType.TV_SHOW
+        binding.tvReleaseYear.text = movieData.other
+        binding.tvReleaseYear.isVisible = movieData.type == MovieType.MOVIE
         Glide.with(itemView.context).load(movieData.thumbnail).into(binding.ivPoster)
 
         itemView.setOnClickListener {

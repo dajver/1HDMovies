@@ -3,6 +3,7 @@
     <color name="background_gradient_start">#000000</color>
     <color name="background_gradient_end">#DDDDDD</color>
     <color name="fastlane_background">#0096a6</color>
+    <color name="fastlane_light_background">#02C2D7</color>
     <color name="fastlane_dark_background">#006671</color>
     <color name="search_opaque">#926224</color>
     <color name="selected_background">#ffaa3f</color>
