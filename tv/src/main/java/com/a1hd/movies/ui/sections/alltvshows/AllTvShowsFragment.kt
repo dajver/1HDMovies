@@ -27,7 +27,7 @@ class AllTvShowsFragment: BaseFragment<FragmentAllTvShowsBinding>(FragmentAllTvS
         val paginationListener = object : PaginationScrollListener(layoutManager as LinearLayoutManager) {
             override fun loadMoreItems() {
                 allTvShowsViewModel.currentPage += 1
-                allTvShowsViewModel.fetchTvShows()
+                allTvShowsViewModel.fetchPaginationTvShows()
             }
         }
         allTvShowsRecyclerAdapter.onTvShowsClickListener = {

@@ -26,4 +26,9 @@ class AllTvShowsViewModel @Inject constructor(
         }
         fetchTvShowsMutableLiveData.postValue(allTvShowsList)
     }
+
+    fun fetchPaginationTvShows() = launch {
+        allTvShowsList = parseJsonTvShowsRepository.fetchTvShows(page = currentPage)
+        fetchTvShowsMutableLiveData.postValue(allTvShowsList)
+    }
 }

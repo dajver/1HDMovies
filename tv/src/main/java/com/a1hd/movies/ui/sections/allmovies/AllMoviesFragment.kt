@@ -28,7 +28,7 @@ class AllMoviesFragment: BaseFragment<FragmentAllMoviesBinding>(FragmentAllMovie
         val paginationListener = object : PaginationScrollListener(layoutManager as LinearLayoutManager) {
             override fun loadMoreItems() {
                 allMoviesViewModel.currentPage += 1
-                allMoviesViewModel.fetchMovies()
+                allMoviesViewModel.fetchPaginationMovies()
             }
         }
         allMoviesRecyclerAdapter.onMovieClickListener = {

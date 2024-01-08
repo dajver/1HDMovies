@@ -26,4 +26,9 @@ class AllMoviesViewModel @Inject constructor(
         }
         fetchMoviesMutableLiveData.postValue(allMoviesList)
     }
+
+    fun fetchPaginationMovies() = launch {
+        allMoviesList = parseJsonMoviesRepository.fetchMovies(page = currentPage)
+        fetchMoviesMutableLiveData.postValue(allMoviesList)
+    }
 }
