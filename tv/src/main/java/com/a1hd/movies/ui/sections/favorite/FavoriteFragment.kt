@@ -21,7 +21,7 @@ class FavoriteFragment: BaseFragment<FragmentFavoriteBinding>(FragmentFavoriteBi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         favoritesRecyclerAdapter.onFavoriteClickListener = {
-            navigationRouter.navigateTo(Router.MovieDetails(it.link))
+            navigationRouter.navigateTo(Router.MovieDetails(it.linkToDetails))
         }
         binding.rvFavorites.adapter = favoritesRecyclerAdapter
 

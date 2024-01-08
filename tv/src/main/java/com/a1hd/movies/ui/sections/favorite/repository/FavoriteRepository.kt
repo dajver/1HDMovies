@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import com.a1hd.movies.api.repository.MoviesDetailsDataModel
 import com.a1hd.movies.etc.extensions.mutableList
 import com.google.gson.Gson
+import java.util.Date
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,7 +16,7 @@ class FavoriteRepository @Inject constructor(prefs: SharedPreferences, gson: Gso
     private var favorites: MutableList<MoviesDetailsDataModel> by prefs.mutableList(FAVORITE_LIST, gson, "")
 
     fun fetchAllFavorites(): MutableList<MoviesDetailsDataModel> {
-        return favorites
+        return favorites.sortedByDescending { it.addedAt }.toMutableList()
     }
 
     fun favorite(movie: MoviesDetailsDataModel) {
@@ -33,6 +34,7 @@ class FavoriteRepository @Inject constructor(prefs: SharedPreferences, gson: Gso
     private fun save(movie: MoviesDetailsDataModel) {
         val favoritesList = mutableListOf<MoviesDetailsDataModel>()
         favoritesList.addAll(favorites)
+        movie.addedAt = Date().time
         favoritesList.add(movie)
         favorites = favoritesList
     }

@@ -34,9 +34,9 @@ class ParseJsonMovieDetailsRepository @Inject constructor(
         val release = if (ratingAndOther.size >= 5) ratingAndOther[5] else ""
         val production = if (ratingAndOther.size >= 6) ratingAndOther[6] else ""
         val movieDetailsModel = if (type == MovieType.MOVIE){
-            MoviesDetailsDataModel(title, thumbnail, link, type, description, quality, cast, genre, duration, country, imdb, release, production)
+            MoviesDetailsDataModel(title, thumbnail, link, linkToMovie, type, description, quality, cast, genre, duration, country, imdb, release, production)
         } else {
-            MoviesDetailsDataModel(title, thumbnail, link, type, description, quality, cast, genre, duration, country, imdb, release, production, getSeasons(linkToMovie))
+            MoviesDetailsDataModel(title, thumbnail, link, linkToMovie, type, description, quality, cast, genre, duration, country, imdb, release, production, getSeasons(linkToMovie))
         }
         movieDetailsModel
     }
@@ -81,6 +81,7 @@ data class MoviesDetailsDataModel(
     val name: String,
     val thumbnail: String,
     val link: String,
+    val linkToDetails: String,
     val type: MovieType,
     val description: String,
     val quality: String,
@@ -92,7 +93,9 @@ data class MoviesDetailsDataModel(
     val release: String,
     val production: String,
     val seasonsList: MutableList<MovieSeasonDataModel>? = mutableListOf()
-)
+) {
+    var addedAt: Long? = null
+}
 
 data class MovieSeasonDataModel(
     val seasonId: String,
