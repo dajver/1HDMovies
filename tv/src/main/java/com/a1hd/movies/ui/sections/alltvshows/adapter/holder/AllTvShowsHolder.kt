@@ -10,6 +10,7 @@ class AllTvShowsHolder(private val binding: ItemDashboardBinding) : RecyclerView
     fun bind(movieData: MoviesDataModel, onStatisticsClickListener: (MoviesDataModel) -> Unit) {
         binding.tvName.text = movieData.name
         binding.tvQuality.text = movieData.quality
+        binding.tvOther.text = movieData.other
         Glide.with(itemView.context).load(movieData.thumbnail).into(binding.ivPoster)
 
         itemView.setOnClickListener {

@@ -2,6 +2,7 @@ package com.a1hd.movies.ui.sections.dashboard.adapter.holders
 
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.a1hd.movies.api.repository.MovieType
 import com.a1hd.movies.databinding.ItemDashboardBinding
 import com.a1hd.movies.api.repository.MoviesDataModel
 import com.bumptech.glide.Glide
@@ -20,6 +21,8 @@ class DashboardHolder(private val binding: ItemDashboardBinding) : RecyclerView.
         val isTitleVisible = movieData.thumbnail.isEmpty() && movieData.quality.isEmpty()
         binding.tvTitle.isVisible = isTitleVisible
         binding.tvTitle.text = movieData.name
+        binding.tvOther.text = movieData.other
+        binding.tvOther.isVisible = movieData.type == MovieType.TV_SHOW
 
         itemView.setOnClickListener {
             onStatisticsClickListener.invoke(movieData)

@@ -17,15 +17,16 @@ class ParseJsonTvShowsRepository @Inject constructor() {
         val names = filmVisualInformation.eachAttr("alt")
         val links = filmTextInformation.select("h3.film-name").select("a").eachAttr("href")
         val dateInfo = filmReleaseInformation.select("span.item").textNodes()
-        val type = dateInfo.filter { it.text().contains("Movie") || it.text().contains("Series") }
+        val episodes = dateInfo.filter { it.text().contains("SS") }
         val moviesMap = mutableListOf<MoviesDataModel>()
-        thumbnails.forEachIndexed { index, data ->
+        thumbnails.forEachIndexed { index, _ ->
             val name = names[index]
             val thumbnail = thumbnails[index]
             val link = links[index]
-            val type = if (type[index].text() == "Movie") MovieType.MOVIE else MovieType.TV_SHOW
+            val type = MovieType.TV_SHOW
             val quality = quality[index].text()
-            moviesMap.add(MoviesDataModel(name, thumbnail, link, type, quality))
+            val episode = episodes[index].text()
+            moviesMap.add(MoviesDataModel(name, thumbnail, link, type, quality, episode))
         }
         moviesMap
     }

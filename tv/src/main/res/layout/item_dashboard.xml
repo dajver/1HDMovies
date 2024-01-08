@@ -24,35 +24,54 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
+            android:layout_weight="0.1"
+            android:background="@color/transparent_background"
+            android:gravity="start"
             android:padding="10dp"
-            android:background="@android:color/transparent"
-            android:gravity="center_horizontal"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             tools:text="HD" />
 
-        <TextView
-            android:id="@+id/tvName"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
             android:background="@color/transparent_background"
-            android:gravity="center_horizontal"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            tools:text="Title Name" />
+            android:layout_gravity="bottom|center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvOther"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="end"
+                android:textColor="@color/selected_background"
+                android:textSize="14sp"
+                tools:text="2023" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                tools:text="Title Name" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="10dp"
             android:background="@android:color/transparent"
             android:gravity="center"
-            android:visibility="visible"
+            android:padding="10dp"
             android:textColor="@android:color/white"
             android:textSize="22sp"
+            android:visibility="visible"
             tools:text="MOVIES" />
 
     </FrameLayout>

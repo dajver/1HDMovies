@@ -113,24 +113,28 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
     private fun allMoviesPlaceHolder(): MoviesDataModel {
         val quality = ""
         val thumbnail = ""
+        val episodes = ""
         return MoviesDataModel(
             getString(R.string.all_movies),
             thumbnail,
             NONE_LINK_TO_DETAILS,
             MovieType.MOVIE,
-            quality
+            quality,
+            episodes
         )
     }
 
     private fun allTvShowsPlaceHolder(): MoviesDataModel {
         val quality = ""
         val thumbnail = ""
+        val episodes = ""
         return MoviesDataModel(
             getString(R.string.all_tv_shows),
             thumbnail,
             NONE_LINK_TO_DETAILS,
             MovieType.TV_SHOW,
-            quality
+            quality,
+            episodes
         )
     }
 }

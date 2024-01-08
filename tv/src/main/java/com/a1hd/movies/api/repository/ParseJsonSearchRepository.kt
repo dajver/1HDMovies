@@ -32,9 +32,10 @@ class ParseJsonSearchRepository @Inject constructor(
             val name = names[index]
             val thumbnail = thumbnails[index]
             val link = links[index]
-            val type = if (typeAndYear[index] == "Movie") MovieType.MOVIE else MovieType.TV_SHOW
+            val type = if (typeAndYear[index].split(",")[0] == "Movie") MovieType.MOVIE else MovieType.TV_SHOW
             val quality = if (index >= qualities.size) "" else qualities[index].text()
-            moviesMap.add(MoviesDataModel(name, thumbnail, link, type, quality))
+            val releaseYear = typeAndYear[index].split(",")[1]
+            moviesMap.add(MoviesDataModel(name, thumbnail, link, type, quality, releaseYear))
         }
         moviesMap
     }
