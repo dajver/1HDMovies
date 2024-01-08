@@ -2,6 +2,7 @@ package com.a1hd.movies.ui.sections.alltvshows
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,6 +39,9 @@ class AllTvShowsFragment: BaseFragment<FragmentAllTvShowsBinding>(FragmentAllTvS
 
         allTvShowsViewModel.fetchTvShows()
         allTvShowsViewModel.fetchTvShowsLiveData.observe(viewLifecycleOwner) {
+            binding.pbProgress.isVisible = false
+            binding.llTvShowsContainer.isVisible = true
+
             val tvShowsList = it.toMutableList()
             allTvShowsRecyclerAdapter.setTvSHows(tvShowsList)
         }

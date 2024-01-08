@@ -2,6 +2,7 @@ package com.a1hd.movies.ui.sections.allmovies
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,6 +40,9 @@ class AllMoviesFragment: BaseFragment<FragmentAllMoviesBinding>(FragmentAllMovie
 
         allMoviesViewModel.fetchMovies()
         allMoviesViewModel.fetchMoviesLiveData.observe(viewLifecycleOwner) {
+            binding.pbProgress.isVisible = false
+            binding.llMoviesContainer.isVisible = true
+
             val moviesList = it.toMutableList()
             allMoviesRecyclerAdapter.setMovies(moviesList)
         }
