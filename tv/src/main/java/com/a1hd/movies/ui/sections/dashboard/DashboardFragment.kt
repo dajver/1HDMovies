@@ -1,14 +1,13 @@
 package com.a1hd.movies.ui.sections.dashboard
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.a1hd.movies.R
+import com.a1hd.movies.api.repository.GenresEnum
 import com.a1hd.movies.ui.base.BaseFragment
 import com.a1hd.movies.databinding.FragmentDashboardBinding
-import com.a1hd.movies.ui.navigation.NavigationRouter
 import com.a1hd.movies.ui.navigation.route.Router
 import com.a1hd.movies.api.repository.MovieType
 import com.a1hd.movies.api.repository.MoviesDataModel
@@ -33,6 +32,24 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
 
     @Inject
     lateinit var tvShowsRecyclerAdapter: DashboardRecyclerAdapter
+
+    @Inject
+    lateinit var actionMoviesRecyclerAdapter: DashboardRecyclerAdapter
+
+    @Inject
+    lateinit var comedyMoviesRecyclerAdapter: DashboardRecyclerAdapter
+
+    @Inject
+    lateinit var dramaMoviesRecyclerAdapter: DashboardRecyclerAdapter
+
+    @Inject
+    lateinit var fantasyMoviesRecyclerAdapter: DashboardRecyclerAdapter
+
+    @Inject
+    lateinit var horrorMoviesRecyclerAdapter: DashboardRecyclerAdapter
+
+    @Inject
+    lateinit var mysteryMoviesRecyclerAdapter: DashboardRecyclerAdapter
     
     private val dashboardViewModel: DashboardViewModel by viewModels()
 
@@ -46,6 +63,12 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
         topTvShowsRecyclerAdapter.onMovieClickListener = onMovieClickListener
         moviesRecyclerAdapter.onMovieClickListener = onMovieClickListener
         tvShowsRecyclerAdapter.onMovieClickListener = onMovieClickListener
+        actionMoviesRecyclerAdapter.onMovieClickListener = onMovieClickListener
+        comedyMoviesRecyclerAdapter.onMovieClickListener = onMovieClickListener
+        dramaMoviesRecyclerAdapter.onMovieClickListener = onMovieClickListener
+        fantasyMoviesRecyclerAdapter.onMovieClickListener = onMovieClickListener
+        horrorMoviesRecyclerAdapter.onMovieClickListener = onMovieClickListener
+        mysteryMoviesRecyclerAdapter.onMovieClickListener = onMovieClickListener
         viewPagerAdapter.onMostPopularMovieClickListener = {
             navigationRouter.navigateTo(Router.WatchMovie(it.link))
         }
@@ -53,6 +76,12 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
         binding.rvTopTvShows.adapter = topTvShowsRecyclerAdapter
         binding.rvMovies.adapter = moviesRecyclerAdapter
         binding.rvTvShows.adapter = tvShowsRecyclerAdapter
+        binding.rvAction.adapter = actionMoviesRecyclerAdapter
+        binding.rvComedy.adapter = comedyMoviesRecyclerAdapter
+        binding.rvDrama.adapter = dramaMoviesRecyclerAdapter
+        binding.rvFantasy.adapter = fantasyMoviesRecyclerAdapter
+        binding.rvHorror.adapter = horrorMoviesRecyclerAdapter
+        binding.rvMystery.adapter = mysteryMoviesRecyclerAdapter
         binding.viewPagerMain.adapter = viewPagerAdapter
 
         dashboardViewModel.fetchMostPopular()
@@ -84,13 +113,59 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
             tvShowsRecyclerAdapter.setMovies(tvShowsList)
         }
 
+        dashboardViewModel.fetchActionMovies()
+        dashboardViewModel.fetchActionMoviesLiveData.observe(viewLifecycleOwner) {
+            val actionMovies = it.toMutableList()
+            actionMovies.add(0, genreMoviesPlaceHolder(getString(R.string.action), GenresEnum.ACTION))
+            actionMoviesRecyclerAdapter.setMovies(actionMovies)
+        }
+
+        dashboardViewModel.fetchComedyMovies()
+        dashboardViewModel.fetchComedyMoviesLiveData.observe(viewLifecycleOwner) {
+            val comedyMovies = it.toMutableList()
+            comedyMovies.add(0, genreMoviesPlaceHolder(getString(R.string.comedy), GenresEnum.COMEDY))
+            comedyMoviesRecyclerAdapter.setMovies(comedyMovies)
+        }
+
+        dashboardViewModel.fetchDramaMovies()
+        dashboardViewModel.fetchDramaMoviesLiveData.observe(viewLifecycleOwner) {
+            val dramaMovies = it.toMutableList()
+            dramaMovies.add(0, genreMoviesPlaceHolder(getString(R.string.drama), GenresEnum.DRAMA))
+            dramaMoviesRecyclerAdapter.setMovies(dramaMovies)
+        }
+
+        dashboardViewModel.fetchFantasyMovies()
+        dashboardViewModel.fetchFantasyMoviesLiveData.observe(viewLifecycleOwner) {
+            val fantasyMovies = it.toMutableList()
+            fantasyMovies.add(0, genreMoviesPlaceHolder(getString(R.string.fantasy), GenresEnum.FANTASY))
+            fantasyMoviesRecyclerAdapter.setMovies(fantasyMovies)
+        }
+
+        dashboardViewModel.fetchHorrorMovies()
+        dashboardViewModel.fetchHorrorMoviesLiveData.observe(viewLifecycleOwner) {
+            val horrorMovies = it.toMutableList()
+            horrorMovies.add(0, genreMoviesPlaceHolder(getString(R.string.horror), GenresEnum.HORROR))
+            horrorMoviesRecyclerAdapter.setMovies(horrorMovies)
+        }
+
+        dashboardViewModel.fetchMysteryMovies()
+        dashboardViewModel.fetchMysteryMoviesLiveData.observe(viewLifecycleOwner) {
+            val mysteryMovies = it.toMutableList()
+            mysteryMovies.add(0, genreMoviesPlaceHolder(getString(R.string.mystery), GenresEnum.MYSTERY))
+            mysteryMoviesRecyclerAdapter.setMovies(mysteryMovies)
+        }
+
         setupListeners()
     }
 
     private val onMovieClickListener: (MoviesDataModel) -> Unit = {
         if (it.link == "NONE") {
             if (it.type == MovieType.MOVIE) {
-                navigationRouter.navigateTo(Router.AllMovies)
+                if (it.genre != null) {
+                    navigationRouter.navigateTo(Router.MovieByGenre(it.genre))
+                } else {
+                    navigationRouter.navigateTo(Router.AllMovies)
+                }
             } else if (it.type == MovieType.TV_SHOW) {
                 navigationRouter.navigateTo(Router.AllTvShows)
             }
@@ -136,5 +211,21 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
             quality,
             episodes
         )
+    }
+
+    private fun genreMoviesPlaceHolder(genreName: String, genre: GenresEnum): MoviesDataModel {
+        val quality = ""
+        val thumbnail = ""
+        val episodes = ""
+        return MoviesDataModel(
+            genreName,
+            thumbnail,
+            NONE_LINK_TO_DETAILS,
+            MovieType.MOVIE,
+            quality,
+            episodes
+        ).apply {
+            this.genre = genre
+        }
     }
 }

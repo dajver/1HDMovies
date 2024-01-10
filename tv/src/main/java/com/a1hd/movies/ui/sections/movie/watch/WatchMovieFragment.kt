@@ -8,7 +8,6 @@ import com.a1hd.movies.databinding.FragmentWatchMovieBinding
 import com.a1hd.movies.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
-@UnstableApi
 @AndroidEntryPoint
 class WatchMovieFragment: BaseFragment<FragmentWatchMovieBinding>(FragmentWatchMovieBinding::inflate) {
 
@@ -21,6 +20,7 @@ class WatchMovieFragment: BaseFragment<FragmentWatchMovieBinding>(FragmentWatchM
         }
     }
 
+    @UnstableApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (movieUrl.isNullOrEmpty()) {
