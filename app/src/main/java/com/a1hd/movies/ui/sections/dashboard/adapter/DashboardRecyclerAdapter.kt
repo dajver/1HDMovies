@@ -3,9 +3,9 @@ package com.a1hd.movies.ui.sections.dashboard.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.a1hd.movies.api.repository.MoviesDataModel
 import com.a1hd.movies.databinding.ItemDashboardBinding
 import com.a1hd.movies.ui.sections.dashboard.adapter.holders.DashboardHolder
-import com.a1hd.movies.api.repository.MoviesDataModel
 import javax.inject.Inject
 
 class DashboardRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

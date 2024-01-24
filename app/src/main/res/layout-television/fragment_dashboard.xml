@@ -94,7 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layoutManager=".ui.sections.dashboard.manager.TVLinearLayoutManager"
                     tools:listitem="@layout/item_dashboard" />
 
                 <TextView
@@ -112,7 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layoutManager=".ui.sections.dashboard.manager.TVLinearLayoutManager"
                     tools:listitem="@layout/item_dashboard" />
 
                 <TextView
@@ -130,7 +130,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layoutManager=".ui.sections.dashboard.manager.TVLinearLayoutManager"
                     tools:listitem="@layout/item_dashboard" />
 
                 <TextView
@@ -148,7 +148,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layoutManager=".ui.sections.dashboard.manager.TVLinearLayoutManager"
                     tools:listitem="@layout/item_dashboard" />
 
                 <TextView
@@ -166,7 +166,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layoutManager=".ui.sections.dashboard.manager.TVLinearLayoutManager"
                     tools:listitem="@layout/item_dashboard" />
 
                 <TextView
@@ -184,7 +184,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layoutManager=".ui.sections.dashboard.manager.TVLinearLayoutManager"
                     tools:listitem="@layout/item_dashboard" />
 
                 <TextView
@@ -202,7 +202,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layoutManager=".ui.sections.dashboard.manager.TVLinearLayoutManager"
                     tools:listitem="@layout/item_dashboard" />
 
                 <TextView
@@ -220,7 +220,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layoutManager=".ui.sections.dashboard.manager.TVLinearLayoutManager"
                     tools:listitem="@layout/item_dashboard" />
 
                 <TextView
@@ -238,7 +238,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layoutManager=".ui.sections.dashboard.manager.TVLinearLayoutManager"
                     tools:listitem="@layout/item_dashboard" />
 
                 <TextView
@@ -256,7 +256,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layoutManager=".ui.sections.dashboard.manager.TVLinearLayoutManager"
                     tools:listitem="@layout/item_dashboard" />
 
             </LinearLayout>
