@@ -1,13 +1,13 @@
 package com.a1hd.movies.api
 
 import com.a1hd.movies.etc.extensions.io
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.HttpResponse
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.HttpStatus
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.StatusLine
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.conn.ssl.NoopHostnameVerifier
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.conn.ssl.SSLConnectionSocketFactory
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.impl.client.HttpClients
+import org.apache.http.HttpResponse
+import org.apache.http.HttpStatus
+import org.apache.http.StatusLine
+import org.apache.http.client.methods.HttpGet
+import org.apache.http.conn.ssl.NoopHostnameVerifier
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory
+import org.apache.http.impl.client.HttpClients
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.security.SecureRandom
@@ -17,7 +17,6 @@ import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 
-@Suppress("DEPRECATED_IDENTITY_EQUALS")
 class RestHttpClient @Inject constructor() {
 
     suspend fun get(url: String): String = io {

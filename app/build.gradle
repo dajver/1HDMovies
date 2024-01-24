@@ -35,6 +35,17 @@ android {
         viewBinding true
         buildConfig = true
     }
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/proguard/androidx-annotations.pro']
+            excludes += ['META-INF/DEPENDENCIES']
+        }
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "1hd-movies-${variant.name}.apk"
+        }
+    }
 }
 
 dependencies {
@@ -44,7 +55,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.11.0'
     implementation "androidx.preference:preference-ktx:1.2.1"
     implementation 'com.google.android.material:material:1.11.0'
-    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.9'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.14'
 
     // contains viewModels() delegate
     implementation "androidx.fragment:fragment-ktx:1.6.2"
@@ -55,11 +66,11 @@ dependencies {
 
     // Hilt
     implementation "com.google.dagger:hilt-android:2.48.1"
-    implementation 'androidx.media3:media3-datasource:1.2.0'
+    implementation 'androidx.media3:media3-datasource:1.2.1'
     kapt "com.google.dagger:hilt-android-compiler:2.48.1"
 
     // ExoPlayer
-    def media3_version = "1.2.0"
+    def media3_version = "1.2.1"
     implementation "androidx.media3:media3-exoplayer:$media3_version"
     implementation "androidx.media3:media3-exoplayer-hls:$media3_version"
     implementation "androidx.media3:media3-exoplayer-ima:$media3_version"
