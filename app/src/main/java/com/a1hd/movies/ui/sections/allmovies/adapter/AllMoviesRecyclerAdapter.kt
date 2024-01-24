@@ -26,7 +26,12 @@ class AllMoviesRecyclerAdapter @Inject constructor(): RecyclerView.Adapter<Recyc
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewHolder = (holder as AllMoviesHolder)
-        viewHolder.bind(moviesList[position], onMovieClickListener)
+        val model = moviesList[position]
+        viewHolder.bind(model, onMovieClickListener)
+        if (model.isSelected) {
+            viewHolder.itemView.isSelected = model.isSelected
+            viewHolder.itemView.requestFocus()
+        }
         viewHolder.itemView.setOnFocusChangeListener { v, hasFocus ->
             v.isSelected = hasFocus
         }

@@ -33,6 +33,12 @@ class ParseJsonMoviesGenresRepository @Inject constructor() {
             val releaseYear = if (typeAndYear.size > index) typeAndYear[index].split(",")[1] else ""
             moviesMap.add(MoviesDataModel(name, thumbnail, link, type, quality, releaseYear))
         }
+
+        val firstSelectedItem = moviesMap.firstOrNull()
+        if (firstSelectedItem != null) {
+            firstSelectedItem.isSelected = true
+            moviesMap[0] = firstSelectedItem
+        }
         moviesMap
     }
 }

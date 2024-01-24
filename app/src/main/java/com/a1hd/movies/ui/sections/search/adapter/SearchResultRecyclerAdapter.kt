@@ -25,7 +25,12 @@ class SearchResultRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<R
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewHolder = (holder as SearchResultHolder)
-        viewHolder.bind(searchResultList[position], onSearchResultClickListener)
+        val model = searchResultList[position]
+        viewHolder.bind(model, onSearchResultClickListener)
+        if (model.isSelected) {
+            viewHolder.itemView.isSelected = model.isSelected
+            viewHolder.itemView.requestFocus()
+        }
         viewHolder.itemView.setOnFocusChangeListener { v, hasFocus ->
             v.isSelected = hasFocus
         }

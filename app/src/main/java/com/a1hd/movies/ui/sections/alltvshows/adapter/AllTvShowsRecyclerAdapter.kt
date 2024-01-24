@@ -25,7 +25,12 @@ class AllTvShowsRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<Rec
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewHolder = (holder as AllTvShowsHolder)
-        viewHolder.bind(tvSHowsList[position], onTvShowsClickListener)
+        val model = tvSHowsList[position]
+        viewHolder.bind(model, onTvShowsClickListener)
+        if (model.isSelected) {
+            viewHolder.itemView.isSelected = model.isSelected
+            viewHolder.itemView.requestFocus()
+        }
         viewHolder.itemView.setOnFocusChangeListener { v, hasFocus ->
             v.isSelected = hasFocus
         }

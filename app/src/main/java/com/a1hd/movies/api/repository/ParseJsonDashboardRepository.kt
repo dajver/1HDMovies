@@ -46,6 +46,7 @@ data class MoviesDataModel(
     val other: String
 ) {
     var genre: GenresEnum? = null
+    var isSelected: Boolean = false
 }
 
 enum class MovieType {

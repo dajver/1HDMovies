@@ -26,7 +26,12 @@ class MovieGenresRecyclerAdapter @Inject constructor(): RecyclerView.Adapter<Rec
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewHolder = (holder as MovieGenreHolder)
-        viewHolder.bind(moviesGenreList[position], onMovieGenreClickListener)
+        val model = moviesGenreList[position]
+        viewHolder.bind(model, onMovieGenreClickListener)
+        if (model.isSelected) {
+            viewHolder.itemView.isSelected = model.isSelected
+            viewHolder.itemView.requestFocus()
+        }
         viewHolder.itemView.setOnFocusChangeListener { v, hasFocus ->
             v.isSelected = hasFocus
         }

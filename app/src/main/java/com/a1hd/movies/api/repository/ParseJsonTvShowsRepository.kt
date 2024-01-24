@@ -28,6 +28,12 @@ class ParseJsonTvShowsRepository @Inject constructor() {
             val episode = episodes[index].text()
             moviesMap.add(MoviesDataModel(name, thumbnail, link, type, quality, episode))
         }
+
+        val firstSelectedItem = moviesMap.firstOrNull()
+        if (firstSelectedItem != null) {
+            firstSelectedItem.isSelected = true
+            moviesMap[0] = firstSelectedItem
+        }
         moviesMap
     }
 }
