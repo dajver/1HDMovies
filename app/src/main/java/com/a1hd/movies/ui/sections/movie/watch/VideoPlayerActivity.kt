@@ -4,25 +4,37 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MimeTypes
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
+import androidx.media3.common.TrackSelectionParameters
 import androidx.media3.common.util.UnstableApi
-import androidx.media3.common.util.Util
-import androidx.media3.datasource.DefaultDataSourceFactory
 import androidx.media3.datasource.DefaultHttpDataSource
+import androidx.media3.exoplayer.DefaultLoadControl
+import androidx.media3.exoplayer.DefaultRenderersFactory
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.LoadControl
 import androidx.media3.exoplayer.hls.HlsMediaSource
-import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.exoplayer.source.MediaSource
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
+import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
+import androidx.media3.exoplayer.upstream.DefaultAllocator
+import androidx.media3.exoplayer.upstream.DefaultBandwidthMeter
 import com.a1hd.movies.databinding.ActivityVideoPlayerBinding
 import com.a1hd.movies.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
+
+//Minimum Video you want to buffer while Playing
+private const val MIN_BUFFER_DURATION = 2000
+//Max Video you want to buffer during PlayBack
+private const val MAX_BUFFER_DURATION = 5000
+//Min Video you want to buffer before start Playing it
+private const val MIN_PLAYBACK_START_BUFFER = 1500
+//Min video You want to buffer when user resumes video
+private const val MIN_PLAYBACK_RESUME_BUFFER = 2000
 
 @UnstableApi
 @AndroidEntryPoint
@@ -39,7 +51,24 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>(ActivityVid
     }
 
     private fun initializePlayer() {
-        simpleExoplayer = ExoPlayer.Builder(this).build()
+        val loadControl: LoadControl = DefaultLoadControl.Builder()
+            .setAllocator(DefaultAllocator(true, 16))
+            .setBufferDurationsMs(MIN_BUFFER_DURATION, MAX_BUFFER_DURATION, MIN_PLAYBACK_START_BUFFER, MIN_PLAYBACK_RESUME_BUFFER)
+            .setTargetBufferBytes(-1)
+            .setPrioritizeTimeOverSizeThresholds(true).build()
+        val trackSelector = DefaultTrackSelector(this).apply {
+            parameters = parameters.buildUpon()
+                .setMaxVideoSize(1280, 720)
+                .build()
+        }
+        trackSelector.setParameters(
+            trackSelector.buildUponParameters().setMaxVideoSizeSd()
+        )
+
+        simpleExoplayer = ExoPlayer.Builder(this)
+            .setTrackSelector(trackSelector)
+            .setLoadControl(loadControl)
+            .build()
         preparePlayer(videoUrl)
     }
 
