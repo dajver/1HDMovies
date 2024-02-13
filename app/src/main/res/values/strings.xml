@@ -30,4 +30,5 @@
     <string name="fantasy">Fantasy</string>
     <string name="horror">Horror</string>
     <string name="mystery">Mystery</string>
+    <string name="top_imdb">Top IMDB</string>
 </resources>

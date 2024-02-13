@@ -49,5 +49,6 @@ enum class GenresEnum(val url: String) {
     DRAMA("https://1hd.to/genre/drama-4"),
     FANTASY("https://1hd.to/genre/fantasy-13"),
     HORROR("https://1hd.to/genre/horror-14"),
-    MYSTERY("https://1hd.to/genre/mystery-1")
+    MYSTERY("https://1hd.to/genre/mystery-1"),
+    TOP_IMDB("https://1hd.to/top-imdb");
 }

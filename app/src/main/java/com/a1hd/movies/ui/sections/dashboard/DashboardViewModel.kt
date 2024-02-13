@@ -54,6 +54,9 @@ class DashboardViewModel @Inject constructor(
     private val fetchFantasyMysteryMutableLiveData = MutableLiveData<List<MoviesDataModel>>()
     val fetchMysteryMoviesLiveData: LiveData<List<MoviesDataModel>> = fetchFantasyMysteryMutableLiveData
 
+    private val fetchTopIMDBMutableLiveData = MutableLiveData<List<MoviesDataModel>>()
+    val fetchTopIMDBMoviesLiveData: LiveData<List<MoviesDataModel>> = fetchTopIMDBMutableLiveData
+
     private var mostPopularMovies = emptyList<MostPopularMoviesDataModel>()
     private var dashboardMovies = emptyList<MoviesDataModel>()
     private var allMoviesList = emptyList<MoviesDataModel>()
@@ -64,6 +67,7 @@ class DashboardViewModel @Inject constructor(
     private var allFantasyMoviesList = emptyList<MoviesDataModel>()
     private var allHorrorMoviesList = emptyList<MoviesDataModel>()
     private var allMysteryMoviesList = emptyList<MoviesDataModel>()
+    private var allTopIMDBMoviesList = emptyList<MoviesDataModel>()
 
     fun fetchMostPopular() = launch {
         if (mostPopularMovies.isEmpty()) {
@@ -133,5 +137,12 @@ class DashboardViewModel @Inject constructor(
             allMysteryMoviesList =  parseJsonMoviesGenresRepository.fetchMoviesByGenre(genre = GenresEnum.MYSTERY, page = 1)
         }
         fetchFantasyMysteryMutableLiveData.postValue(allMysteryMoviesList)
+    }
+
+    fun fetchTopIMDBMovies() = launch {
+        if (allTopIMDBMoviesList.isEmpty()) {
+            allTopIMDBMoviesList =  parseJsonMoviesGenresRepository.fetchMoviesByGenre(genre = GenresEnum.TOP_IMDB, page = 1)
+        }
+        fetchTopIMDBMutableLiveData.postValue(allTopIMDBMoviesList)
     }
 }

@@ -264,6 +264,24 @@
                     app:layoutManager=".ui.sections.dashboard.manager.TVLinearLayoutManager"
                     tools:listitem="@layout/item_dashboard" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="@string/top_imdb"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvTopIMDB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager=".ui.sections.dashboard.manager.TVLinearLayoutManager"
+                    tools:listitem="@layout/item_dashboard" />
+
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

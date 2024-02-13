@@ -50,6 +50,9 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
 
     @Inject
     lateinit var mysteryMoviesRecyclerAdapter: DashboardRecyclerAdapter
+
+    @Inject
+    lateinit var topImdbMoviesRecyclerAdapter: DashboardRecyclerAdapter
     
     private val dashboardViewModel: DashboardViewModel by viewModels()
 
@@ -69,6 +72,7 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
         fantasyMoviesRecyclerAdapter.onMovieClickListener = onMovieClickListener
         horrorMoviesRecyclerAdapter.onMovieClickListener = onMovieClickListener
         mysteryMoviesRecyclerAdapter.onMovieClickListener = onMovieClickListener
+        topImdbMoviesRecyclerAdapter.onMovieClickListener = onMovieClickListener
         viewPagerAdapter.onMostPopularMovieClickListener = {
             navigationRouter.navigateTo(Router.WatchMovie(it.link))
         }
@@ -82,6 +86,7 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
         binding.rvFantasy.adapter = fantasyMoviesRecyclerAdapter
         binding.rvHorror.adapter = horrorMoviesRecyclerAdapter
         binding.rvMystery.adapter = mysteryMoviesRecyclerAdapter
+        binding.rvTopIMDB.adapter = topImdbMoviesRecyclerAdapter
         binding.viewPagerMain.adapter = viewPagerAdapter
 
         dashboardViewModel.fetchMostPopular()
@@ -153,6 +158,13 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
             val mysteryMovies = it.toMutableList()
             mysteryMovies.add(0, genreMoviesPlaceHolder(getString(R.string.mystery), GenresEnum.MYSTERY))
             mysteryMoviesRecyclerAdapter.setMovies(mysteryMovies)
+        }
+
+        dashboardViewModel.fetchTopIMDBMovies()
+        dashboardViewModel.fetchTopIMDBMoviesLiveData.observe(viewLifecycleOwner) {
+            val topIMDBMovies = it.toMutableList()
+            topIMDBMovies.add(0, genreMoviesPlaceHolder(getString(R.string.top_imdb), GenresEnum.TOP_IMDB))
+            topImdbMoviesRecyclerAdapter.setMovies(topIMDBMovies)
         }
 
         setupListeners()

@@ -72,6 +72,7 @@ class MovieByGenreFragment: BaseFragment<FragmentMovieByGenreBinding>(FragmentMo
             GenresEnum.FANTASY -> getString(R.string.fantasy)
             GenresEnum.HORROR -> getString(R.string.horror)
             GenresEnum.MYSTERY -> getString(R.string.mystery)
+            GenresEnum.TOP_IMDB -> getString(R.string.top_imdb)
             else -> throw RuntimeException("No such genre type as $this")
         }
     }
