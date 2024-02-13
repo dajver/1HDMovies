@@ -11,6 +11,7 @@ import com.a1hd.movies.ui.base.BaseFragment
 import com.a1hd.movies.ui.navigation.route.Router
 import com.a1hd.movies.ui.sections.movie.adapter.episodes.EpisodesRecyclerAdapter
 import com.a1hd.movies.ui.sections.movie.adapter.season.SeasonsRecyclerAdapter
+import com.a1hd.movies.ui.sections.movie.adapter.youlike.YouMayAlsoLikeRecyclerAdapter
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -23,6 +24,9 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding>(FragmentMo
 
     @Inject
     lateinit var episodesRecyclerAdapter: EpisodesRecyclerAdapter
+
+    @Inject
+    lateinit var youMayAlsoLikeRecyclerAdapter: YouMayAlsoLikeRecyclerAdapter
 
     private val movieDetailsViewModel: MovieDetailsViewModel by viewModels()
 
@@ -47,8 +51,12 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding>(FragmentMo
         episodesRecyclerAdapter.onEpisodeClickListener = {
             navigationRouter.navigateTo(Router.WatchMovie(it.link))
         }
+        youMayAlsoLikeRecyclerAdapter.onMovieClickListener = {
+            navigationRouter.navigateTo(Router.MovieDetails(it.link))
+        }
         binding.rvSeasons.adapter = seasonsRecyclerAdapter
         binding.rvEpisode.adapter = episodesRecyclerAdapter
+        binding.rvYouMayAlsoLike.adapter = youMayAlsoLikeRecyclerAdapter
 
         movieDetailsViewModel.fetchDetails(movieUrl!!)
         movieDetailsViewModel.fetchDetailsMoviesLiveData.observe(viewLifecycleOwner) { movie ->
@@ -90,6 +98,11 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding>(FragmentMo
                 movieDetailsViewModel.favorite(movie)
                 addFavoriteButtonState(movie)
             }
+        }
+
+        movieDetailsViewModel.fetchYouMayAlsoLike(movieUrl!!)
+        movieDetailsViewModel.fetchYouMayAlsoLikeLiveData.observe(viewLifecycleOwner) {
+            youMayAlsoLikeRecyclerAdapter.setMovies(it.toMutableList())
         }
     }
 
