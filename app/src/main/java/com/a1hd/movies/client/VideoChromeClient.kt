@@ -23,6 +23,10 @@ class VideoChromeClient(
     private var actionBar: ActionBar? = null
     private var defaultPoster: Bitmap? = null
 
+    init {
+        webView.settings.userAgentString = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36"
+    }
+
     fun setFullScreenView(actionBar: ActionBar?, frameLayout: FrameLayout) {
         this.actionBar = actionBar
         this.container = frameLayout

@@ -27,9 +27,8 @@ class WatchMovieFragment: BaseFragment<FragmentWatchMovieBinding>(FragmentWatchM
             throw RuntimeException("movieUrl mustn't be null or empty")
         }
 
-        val linkToMovie = if (movieUrl?.startsWith("https://1hd") == true) movieUrl else "https://1hd.to/$movieUrl"
         binding.webView.init()
-        binding.webView.loadUrl(linkToMovie!!)
+        binding.webView.loadUrl(movieUrl!!)
         binding.webView.setFullScreenView(requireActivity().actionBar, binding.fullscreenView)
         binding.webView.sourcesListLiveData.observe(viewLifecycleOwner) {
             binding.webView.ivSourceAvailable.isVisible = it.isNotEmpty()

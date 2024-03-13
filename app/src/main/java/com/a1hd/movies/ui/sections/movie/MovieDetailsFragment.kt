@@ -90,7 +90,7 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding>(FragmentMo
             }
 
             binding.btnWatchMovie.setOnClickListener {
-                navigationRouter.navigateTo(Router.WatchMovie(movie.link))
+                navigationRouter.navigateTo(Router.WatchMovie(movie.watchMovieLinkWithEpisodeId))
             }
 
             addFavoriteButtonState(movie)
