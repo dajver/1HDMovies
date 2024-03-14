@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.a1hd.movies.client.VideoChromeClient
+import com.a1hd.movies.client.WEB_VIEW_USER_AGENT
 import com.a1hd.movies.databinding.ViewVideoWebviewBinding
 import com.a1hd.movies.etc.LastOpenedScreenRepository
 import com.a1hd.movies.ui.sections.select.SelectSourceSheetFragment
@@ -77,6 +78,7 @@ class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(c
                 return false
             }
         }
+        viewBinding.videoViewWebview.settings.userAgentString = WEB_VIEW_USER_AGENT
         viewBinding.videoViewWebview.settings.mediaPlaybackRequiresUserGesture = false
         viewBinding.videoViewWebview.setBackgroundColor(Color.TRANSPARENT)
         viewBinding.videoViewWebview.settings.apply {

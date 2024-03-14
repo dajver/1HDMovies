@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.a1hd.movies.api.repository.MoviesDataModel
 import com.a1hd.movies.databinding.ItemDashboardBinding
+import com.a1hd.movies.ui.isTabletOrientation
 import com.a1hd.movies.ui.sections.genre.adapter.holder.MovieGenreHolder
 import javax.inject.Inject
 
@@ -28,12 +29,15 @@ class MovieGenresRecyclerAdapter @Inject constructor(): RecyclerView.Adapter<Rec
         val viewHolder = (holder as MovieGenreHolder)
         val model = moviesGenreList[position]
         viewHolder.bind(model, onMovieGenreClickListener)
-        if (model.isSelected) {
-            viewHolder.itemView.isSelected = model.isSelected
-            viewHolder.itemView.requestFocus()
-        }
-        viewHolder.itemView.setOnFocusChangeListener { v, hasFocus ->
-            v.isSelected = hasFocus
+
+        if (holder.itemView.context.isTabletOrientation()) {
+            if (model.isSelected) {
+                viewHolder.itemView.isSelected = model.isSelected
+                viewHolder.itemView.requestFocus()
+            }
+            viewHolder.itemView.setOnFocusChangeListener { v, hasFocus ->
+                v.isSelected = hasFocus
+            }
         }
     }
 

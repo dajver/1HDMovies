@@ -91,6 +91,7 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
 
         dashboardViewModel.fetchMostPopular()
         dashboardViewModel.fetchMostPopularLiveData.observe(viewLifecycleOwner) {
+            binding.pbProgressMostPopular.isVisible = false
             viewPagerAdapter.setImages(it.toMutableList())
         }
 
