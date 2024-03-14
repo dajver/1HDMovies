@@ -27,12 +27,30 @@ class ParseJsonMostPopularRepository @Inject constructor() {
             val name = names[index]
             val thumbnail = thumbnails[index]
             val link = links[index]
+            val baseUrl = if (link.startsWith("https://1hd")) link else "https://1hd.to"
+            val watchMovieLink = "$baseUrl$link"
+            val episodeId = extractEpisodeId(watchMovieLink)
+            val watchMovieLinkWithEpisodeId = "$baseUrl$link/$episodeId"
             val description = descriptions[index].text()
             val quality = qualities[index]
-            moviesMap.add(MostPopularMoviesDataModel(name, thumbnail, link, quality, description))
+            moviesMap.add(MostPopularMoviesDataModel(name, thumbnail, watchMovieLinkWithEpisodeId, quality, description))
         }
 
         moviesMap
+    }
+
+    private fun extractEpisodeId(watchUrl: String): String? {
+        val doc = Jsoup.connect(watchUrl).get()
+        val scriptTags = doc.getElementsByTag("script")
+        for (scriptTag in scriptTags) {
+            val scriptContent = scriptTag.data()
+            if (scriptContent.contains("const movie =")) {
+                val pattern = "episodeId: '([0-9]+)'".toRegex()
+                val matchResult = pattern.find(scriptContent)
+                return matchResult?.groups?.get(1)?.value // Return the episodeId if found
+            }
+        }
+        return null
     }
 }
 
