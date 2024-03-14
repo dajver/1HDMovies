@@ -32,7 +32,7 @@ class SearchResultRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<R
         if (holder.itemView.context.isTabletOrientation()) {
             if (model.isSelected) {
                 viewHolder.itemView.isSelected = model.isSelected
-                viewHolder.itemView.requestFocus()
+//                viewHolder.itemView.requestFocus()
             }
             viewHolder.itemView.setOnFocusChangeListener { v, hasFocus ->
                 v.isSelected = hasFocus
