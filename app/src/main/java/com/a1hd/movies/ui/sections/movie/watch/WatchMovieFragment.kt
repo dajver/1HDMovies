@@ -40,6 +40,10 @@ class WatchMovieFragment: BaseFragment<FragmentWatchMovieBinding>(FragmentWatchM
         binding.webView.sourcesLisFetchingLiveData.observe(viewLifecycleOwner) {
             binding.pbLoadingSources.isVisible = it
         }
+
+        binding.webView.sourcesLoadingStatusLiveData.observe(viewLifecycleOwner) {
+            binding.tvLoadingStatus.text = it
+        }
     }
 
     companion object {

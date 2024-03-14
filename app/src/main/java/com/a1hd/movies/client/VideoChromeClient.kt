@@ -5,12 +5,12 @@ import android.graphics.Bitmap
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.webkit.ConsoleMessage
 import android.webkit.GeolocationPermissions
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.widget.FrameLayout
 import com.a1hd.movies.R
-
 
 const val WEB_VIEW_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36"
 
@@ -25,6 +25,8 @@ class VideoChromeClient(
     private var customViewCallback: CustomViewCallback? = null
     private var actionBar: ActionBar? = null
     private var defaultPoster: Bitmap? = null
+
+    var onConsoleErrorMessage: (String) -> Unit = {}
 
     init {
         webView.settings.userAgentString = WEB_VIEW_USER_AGENT
@@ -77,6 +79,14 @@ class VideoChromeClient(
     override fun getDefaultVideoPoster(): Bitmap? {
         defaultPoster = super.getDefaultVideoPoster()
         return defaultPoster
+    }
+
+    override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
+        val errorMessage = consoleMessage?.message().toString()
+        if (!errorMessage.startsWith("[object")) {
+            onConsoleErrorMessage.invoke(errorMessage)
+        }
+        return super.onConsoleMessage(consoleMessage)
     }
 
     override fun onGeolocationPermissionsShowPrompt(origin: String, callback: GeolocationPermissions.Callback) {

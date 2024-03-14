@@ -43,6 +43,9 @@ class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(c
     private val sourcesListFetchingMutableLiveData = MutableLiveData<Boolean>()
     val sourcesLisFetchingLiveData: LiveData<Boolean> = sourcesListFetchingMutableLiveData
 
+    private val sourcesLoadingStatusMutableLiveData = MutableLiveData<String>()
+    val sourcesLoadingStatusLiveData: LiveData<String> = sourcesLoadingStatusMutableLiveData
+
     init {
         viewBinding = ViewVideoWebviewBinding.inflate(LayoutInflater.from(context), this, true)
         chromeClient = VideoChromeClient(viewBinding.videoViewFrame, viewBinding.videoViewWebview)
@@ -70,6 +73,7 @@ class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(c
                         sourcesListFetchingMutableLiveData.postValue(false)
                     }, delayMillis)
                 }
+
                 return super.shouldInterceptRequest(view, request)
             }
 
@@ -84,6 +88,10 @@ class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(c
         viewBinding.videoViewWebview.settings.apply {
             cacheMode = WebSettings.LOAD_NO_CACHE
             javaScriptEnabled = true
+        }
+
+        chromeClient.onConsoleErrorMessage = {
+            sourcesLoadingStatusMutableLiveData.postValue(it)
         }
     }
 
