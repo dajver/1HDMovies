@@ -43,6 +43,7 @@ class WatchMovieFragment: BaseFragment<FragmentWatchMovieBinding>(FragmentWatchM
 
         binding.webView.sourcesLoadingStatusLiveData.observe(viewLifecycleOwner) {
             binding.tvLoadingStatus.text = it
+            binding.webView.loadUrl(movieUrl!!)
         }
     }
 

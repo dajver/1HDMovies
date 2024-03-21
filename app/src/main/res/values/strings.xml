@@ -32,4 +32,5 @@
     <string name="mystery">Mystery</string>
     <string name="top_imdb">Top IMDB</string>
     <string name="you_may_also_like">You may also like</string>
+    <string name="loading">Loading…</string>
 </resources>

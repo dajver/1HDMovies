@@ -83,7 +83,7 @@ class VideoChromeClient(
 
     override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
         val errorMessage = consoleMessage?.message().toString()
-        if (!errorMessage.startsWith("[object")) {
+        if (errorMessage.contains("102630")) {
             onConsoleErrorMessage.invoke(errorMessage)
         }
         return super.onConsoleMessage(consoleMessage)
