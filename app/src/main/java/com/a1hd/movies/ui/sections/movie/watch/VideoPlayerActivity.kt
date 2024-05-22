@@ -10,19 +10,15 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.MimeTypes
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
-import androidx.media3.common.TrackSelectionParameters
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DefaultHttpDataSource
 import androidx.media3.exoplayer.DefaultLoadControl
-import androidx.media3.exoplayer.DefaultRenderersFactory
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.LoadControl
 import androidx.media3.exoplayer.hls.HlsMediaSource
 import androidx.media3.exoplayer.source.MediaSource
-import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import androidx.media3.exoplayer.upstream.DefaultAllocator
-import androidx.media3.exoplayer.upstream.DefaultBandwidthMeter
 import com.a1hd.movies.databinding.ActivityVideoPlayerBinding
 import com.a1hd.movies.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,11 +55,10 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>(ActivityVid
         val trackSelector = DefaultTrackSelector(this).apply {
             parameters = parameters.buildUpon()
                 .setMaxVideoSize(1280, 720)
+                .setAllowVideoMixedMimeTypeAdaptiveness(true)
+                .setAllowVideoNonSeamlessAdaptiveness(true)
                 .build()
         }
-        trackSelector.setParameters(
-            trackSelector.buildUponParameters().setMaxVideoSizeSd()
-        )
 
         simpleExoplayer = ExoPlayer.Builder(this)
             .setTrackSelector(trackSelector)
