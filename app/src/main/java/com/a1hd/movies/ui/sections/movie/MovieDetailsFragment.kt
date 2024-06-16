@@ -2,8 +2,10 @@ package com.a1hd.movies.ui.sections.movie
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.a1hd.movies.R
 import com.a1hd.movies.api.repository.MoviesDetailsDataModel
 import com.a1hd.movies.databinding.FragmentMovieDetailsBinding
@@ -45,6 +47,8 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding>(FragmentMo
             throw RuntimeException("movieUrl mustn't be null or empty")
         }
 
+        val divider = DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL)
+        divider.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.divider_color)!!)
         seasonsRecyclerAdapter.onSeasonClickListener = {
             episodesRecyclerAdapter.setEpisodes(it.episodes)
         }
@@ -55,7 +59,9 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding>(FragmentMo
             navigationRouter.navigateTo(Router.MovieDetails(it.link))
         }
         binding.rvSeasons.adapter = seasonsRecyclerAdapter
+        binding.rvSeasons.addItemDecoration(divider)
         binding.rvEpisode.adapter = episodesRecyclerAdapter
+        binding.rvEpisode.addItemDecoration(divider)
         binding.rvYouMayAlsoLike.adapter = youMayAlsoLikeRecyclerAdapter
 
         movieDetailsViewModel.fetchDetails(movieUrl!!)
