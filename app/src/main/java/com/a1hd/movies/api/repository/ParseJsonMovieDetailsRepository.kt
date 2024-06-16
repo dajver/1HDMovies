@@ -64,7 +64,7 @@ class ParseJsonMovieDetailsRepository @Inject constructor(
         val regex = Regex("[0-9]+$")
         val match = regex.find(linkToMovie)
         val movieId = match?.value
-        val ajaxLink = "https://1hd.sx/ajax/movie/seasons/$movieId"
+        val ajaxLink = "https://1hd.to/ajax/movie/seasons/$movieId"
         val getResponse = restHttpClient.get(ajaxLink)
         val doc = Jsoup.parse(getResponse)
         val seasonIdList = doc.select("div.is-seasons").select("a").eachAttr("data-id")
@@ -79,7 +79,7 @@ class ParseJsonMovieDetailsRepository @Inject constructor(
     }
 
     private suspend fun getEpisodes(seasonId: String): MutableList<MovieEpisodesDataModel> = io {
-        val ajaxLink = "https://1hd.sx/ajax/movie/season/episodes/$seasonId"
+        val ajaxLink = "https://1hd.to/ajax/movie/season/episodes/$seasonId"
         val getResponse = restHttpClient.get(ajaxLink)
         val doc = Jsoup.parse(getResponse)
         val episodeNumberList = doc.select("div.is-info").select("span.number").textNodes()

@@ -1,30 +1,21 @@
 package com.a1hd.movies.api
 
+import android.util.Log
 import com.a1hd.movies.etc.extensions.io
-import org.apache.http.HttpResponse
-import org.apache.http.HttpStatus
-import org.apache.http.StatusLine
-import org.apache.http.client.methods.HttpGet
-import org.apache.http.conn.ssl.NoopHostnameVerifier
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory
-import org.apache.http.impl.client.HttpClients
 import java.io.BufferedReader
-import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
-import java.security.SecureRandom
-import java.security.cert.X509Certificate
 import javax.inject.Inject
-import javax.net.ssl.SSLContext
-import javax.net.ssl.TrustManager
-import javax.net.ssl.X509TrustManager
 
 class RestHttpClient @Inject constructor() {
 
     suspend fun get(url: String): String = io {
+        Log.d("RestHttpClient", "Connecting to URL: $url")
+
         val urlConnection = URL(url).openConnection() as HttpURLConnection
+        urlConnection.instanceFollowRedirects = true
         try {
             urlConnection.apply {
                 requestMethod = "GET"
@@ -44,6 +35,9 @@ class RestHttpClient @Inject constructor() {
             } else {
                 throw IOException("HTTP error code: ${urlConnection.responseCode}")
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            throw IOException(e.cause)
         } finally {
             urlConnection.disconnect()
         }
