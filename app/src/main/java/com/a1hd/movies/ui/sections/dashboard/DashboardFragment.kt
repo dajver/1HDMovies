@@ -172,7 +172,7 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
     }
 
     private val onMovieClickListener: (MoviesDataModel) -> Unit = {
-        if (it.link == "NONE") {
+        if (it.link == NONE_LINK_TO_DETAILS) {
             if (it.type == MovieType.MOVIE) {
                 if (it.genre != null) {
                     navigationRouter.navigateTo(Router.MovieByGenre(it.genre))
