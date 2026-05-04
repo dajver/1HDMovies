@@ -115,63 +115,63 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
         dashboardViewModel.fetchMovies()
         dashboardViewModel.fetchMoviesLiveData.observe(viewLifecycleOwner) {
             val moviesList = it.toMutableList()
-            moviesList.add(0, allMoviesPlaceHolder())
+            moviesList.add(moviesList.size, allMoviesPlaceHolder())
             moviesRecyclerAdapter.setMovies(moviesList)
         }
 
         dashboardViewModel.fetchTvShows()
         dashboardViewModel.fetchTvShowsLiveData.observe(viewLifecycleOwner) {
             val tvShowsList = it.toMutableList()
-            tvShowsList.add(0, allTvShowsPlaceHolder())
+            tvShowsList.add(tvShowsList.size, allTvShowsPlaceHolder())
             tvShowsRecyclerAdapter.setMovies(tvShowsList)
         }
 
         dashboardViewModel.fetchActionMovies()
         dashboardViewModel.fetchActionMoviesLiveData.observe(viewLifecycleOwner) {
             val actionMovies = it.toMutableList()
-            actionMovies.add(0, genreMoviesPlaceHolder(getString(R.string.action), GenresEnum.ACTION))
+            actionMovies.add(actionMovies.size, genreMoviesPlaceHolder(getString(R.string.action), GenresEnum.ACTION))
             actionMoviesRecyclerAdapter.setMovies(actionMovies)
         }
 
         dashboardViewModel.fetchComedyMovies()
         dashboardViewModel.fetchComedyMoviesLiveData.observe(viewLifecycleOwner) {
             val comedyMovies = it.toMutableList()
-            comedyMovies.add(0, genreMoviesPlaceHolder(getString(R.string.comedy), GenresEnum.COMEDY))
+            comedyMovies.add(comedyMovies.size, genreMoviesPlaceHolder(getString(R.string.comedy), GenresEnum.COMEDY))
             comedyMoviesRecyclerAdapter.setMovies(comedyMovies)
         }
 
         dashboardViewModel.fetchDramaMovies()
         dashboardViewModel.fetchDramaMoviesLiveData.observe(viewLifecycleOwner) {
             val dramaMovies = it.toMutableList()
-            dramaMovies.add(0, genreMoviesPlaceHolder(getString(R.string.drama), GenresEnum.DRAMA))
+            dramaMovies.add(dramaMovies.size, genreMoviesPlaceHolder(getString(R.string.drama), GenresEnum.DRAMA))
             dramaMoviesRecyclerAdapter.setMovies(dramaMovies)
         }
 
         dashboardViewModel.fetchFantasyMovies()
         dashboardViewModel.fetchFantasyMoviesLiveData.observe(viewLifecycleOwner) {
             val fantasyMovies = it.toMutableList()
-            fantasyMovies.add(0, genreMoviesPlaceHolder(getString(R.string.fantasy), GenresEnum.FANTASY))
+            fantasyMovies.add(fantasyMovies.size, genreMoviesPlaceHolder(getString(R.string.fantasy), GenresEnum.FANTASY))
             fantasyMoviesRecyclerAdapter.setMovies(fantasyMovies)
         }
 
         dashboardViewModel.fetchHorrorMovies()
         dashboardViewModel.fetchHorrorMoviesLiveData.observe(viewLifecycleOwner) {
             val horrorMovies = it.toMutableList()
-            horrorMovies.add(0, genreMoviesPlaceHolder(getString(R.string.horror), GenresEnum.HORROR))
+            horrorMovies.add(horrorMovies.size, genreMoviesPlaceHolder(getString(R.string.horror), GenresEnum.HORROR))
             horrorMoviesRecyclerAdapter.setMovies(horrorMovies)
         }
 
         dashboardViewModel.fetchMysteryMovies()
         dashboardViewModel.fetchMysteryMoviesLiveData.observe(viewLifecycleOwner) {
             val mysteryMovies = it.toMutableList()
-            mysteryMovies.add(0, genreMoviesPlaceHolder(getString(R.string.mystery), GenresEnum.MYSTERY))
+            mysteryMovies.add(mysteryMovies.size, genreMoviesPlaceHolder(getString(R.string.mystery), GenresEnum.MYSTERY))
             mysteryMoviesRecyclerAdapter.setMovies(mysteryMovies)
         }
 
         dashboardViewModel.fetchTopIMDBMovies()
         dashboardViewModel.fetchTopIMDBMoviesLiveData.observe(viewLifecycleOwner) {
             val topIMDBMovies = it.toMutableList()
-            topIMDBMovies.add(0, genreMoviesPlaceHolder(getString(R.string.top_imdb), GenresEnum.TOP_IMDB))
+            topIMDBMovies.add(topIMDBMovies.size, genreMoviesPlaceHolder(getString(R.string.top_imdb), GenresEnum.TOP_IMDB))
             topImdbMoviesRecyclerAdapter.setMovies(topIMDBMovies)
         }
 
