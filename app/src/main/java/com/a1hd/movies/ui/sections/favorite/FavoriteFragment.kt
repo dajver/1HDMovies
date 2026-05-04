@@ -1,5 +1,6 @@
 package com.a1hd.movies.ui.sections.favorite
 
+import com.a1hd.movies.BuildConfig
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -21,7 +22,7 @@ class FavoriteFragment: BaseFragment<FragmentFavoriteBinding>(FragmentFavoriteBi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         favoritesRecyclerAdapter.onFavoriteClickListener = {
-            val movieUrl = it.linkToDetails.replace("https://1hd.art", "")
+            val movieUrl = it.linkToDetails.replace(BuildConfig.BASE_URL, "")
             navigationRouter.navigateTo(Router.MovieDetails(movieUrl))
         }
         binding.rvFavorites.adapter = favoritesRecyclerAdapter

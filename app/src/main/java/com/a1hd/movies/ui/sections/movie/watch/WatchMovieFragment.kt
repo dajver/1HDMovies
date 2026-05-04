@@ -1,5 +1,6 @@
 package com.a1hd.movies.ui.sections.movie.watch
 
+import com.a1hd.movies.BuildConfig
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
@@ -35,7 +36,7 @@ class WatchMovieFragment: BaseFragment<FragmentWatchMovieBinding>(FragmentWatchM
 
         binding.webView.sourcesListLiveData.observe(viewLifecycleOwner) {
             binding.webView.ivSourceAvailable.isVisible = it.isNotEmpty()
-            val referer = viewModel.embedUrl ?: movieUrl ?: "https://1hd.art/"
+            val referer = viewModel.embedUrl ?: movieUrl ?: "${BuildConfig.BASE_URL}/"
             startActivity(VideoPlayerActivity.setUrl(requireContext(), it.first(), referer))
             navigationRouter.navigateBack()
         }

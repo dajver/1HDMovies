@@ -1,6 +1,7 @@
 package com.a1hd.movies.etc
 
 import android.content.SharedPreferences
+import com.a1hd.movies.BuildConfig
 import com.a1hd.movies.etc.extensions.string
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -12,6 +13,6 @@ class LastOpenedScreenRepository @Inject constructor(
     prefs: SharedPreferences
 ) {
 
-    var lastOpenedPage: String by prefs.string(LAST_OPENED_PAGE_LIST, "https://1hd.art/home")
+    var lastOpenedPage: String by prefs.string(LAST_OPENED_PAGE_LIST, "${BuildConfig.BASE_URL}/home")
 
 }

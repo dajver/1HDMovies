@@ -1,5 +1,6 @@
 package com.a1hd.movies.api.repository
 
+import com.a1hd.movies.BuildConfig
 import com.a1hd.movies.api.RestHttpClient
 import com.a1hd.movies.etc.extensions.io
 import org.jsoup.Jsoup
@@ -10,7 +11,7 @@ class ParseJsonMostPopularRepository @Inject constructor(
 ) {
 
     suspend fun fetchMostPopular(): List<MostPopularMoviesDataModel> = io {
-        val doc = Jsoup.parse(restHttpClient.get("https://1hd.art/home"))
+        val doc = Jsoup.parse(restHttpClient.get("${BuildConfig.BASE_URL}/home"))
         val moviesElements = doc.select("div.swiper-wrapper")
         val movieDetailsContainer = moviesElements.select("div.container").select("div.is-caption")
         val thumbnails = moviesElements.select("div.slide-cover").select("img").eachAttr("src")
@@ -30,7 +31,7 @@ class ParseJsonMostPopularRepository @Inject constructor(
             val name = names[index]
             val thumbnail = thumbnails[index]
             val link = links[index]
-            val watchMovieLink = if (link.startsWith("https://1hd")) link else "https://1hd.art$link"
+            val watchMovieLink = if (link.startsWith("https://1hd")) link else "${BuildConfig.BASE_URL}$link"
             val description = descriptions[index].text()
             val quality = qualities[index]
             moviesMap.add(MostPopularMoviesDataModel(name, thumbnail, watchMovieLink, quality, description))

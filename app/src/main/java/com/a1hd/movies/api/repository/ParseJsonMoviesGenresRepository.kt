@@ -1,5 +1,6 @@
 package com.a1hd.movies.api.repository
 
+import com.a1hd.movies.BuildConfig
 import com.a1hd.movies.api.RestHttpClient
 import com.a1hd.movies.etc.extensions.io
 import org.jsoup.Jsoup
@@ -46,12 +47,14 @@ class ParseJsonMoviesGenresRepository @Inject constructor(
     }
 }
 
-enum class GenresEnum(val url: String) {
-    ACTION("https://1hd.art/genre/action"),
-    COMEDY("https://1hd.art/genre/comedy"),
-    DRAMA("https://1hd.art/genre/drama"),
-    FANTASY("https://1hd.art/genre/fantasy"),
-    HORROR("https://1hd.art/genre/horror"),
-    MYSTERY("https://1hd.art/genre/mystery"),
-    TOP_IMDB("https://1hd.art/top-imdb");
+enum class GenresEnum(val path: String) {
+    ACTION("/genre/action"),
+    COMEDY("/genre/comedy"),
+    DRAMA("/genre/drama"),
+    FANTASY("/genre/fantasy"),
+    HORROR("/genre/horror"),
+    MYSTERY("/genre/mystery"),
+    TOP_IMDB("/top-imdb");
+
+    val url: String get() = "${BuildConfig.BASE_URL}$path"
 }

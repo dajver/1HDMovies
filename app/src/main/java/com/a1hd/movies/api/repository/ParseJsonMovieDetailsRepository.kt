@@ -1,5 +1,6 @@
 package com.a1hd.movies.api.repository
 
+import com.a1hd.movies.BuildConfig
 import com.a1hd.movies.api.RestHttpClient
 import com.a1hd.movies.etc.extensions.io
 import org.jsoup.Jsoup
@@ -12,7 +13,7 @@ class ParseJsonMovieDetailsRepository @Inject constructor(
     // Seasons are loaded from the series page HTML (a.ss-item elements with data-id hashes)
     // Episodes are fetched via: https://1hd.art/ajax/ajax.php?episode={season-data-id-hash}
     suspend fun fetchDetails(url: String): MoviesDetailsDataModel = io {
-        val baseUrl = "https://1hd.art"
+        val baseUrl = BuildConfig.BASE_URL
         val linkToMovieDetails = if (url.startsWith("https://1hd")) url else "$baseUrl$url"
         val doc = Jsoup.parse(restHttpClient.get(linkToMovieDetails))
         val type = if (linkToMovieDetails.contains("movie")) MovieType.MOVIE else MovieType.TV_SHOW
@@ -61,7 +62,7 @@ class ParseJsonMovieDetailsRepository @Inject constructor(
 
     private suspend fun getEpisodes(seasonHash: String): MutableList<MovieEpisodesDataModel> = io {
         try {
-            val ajaxLink = "https://1hd.art/ajax/ajax.php?episode=$seasonHash"
+            val ajaxLink = "${BuildConfig.BASE_URL}/ajax/ajax.php?episode=$seasonHash"
             val getResponse = restHttpClient.get(ajaxLink)
             val doc = Jsoup.parse(getResponse)
             val episodeElements = doc.select("a.ep-item")
@@ -70,7 +71,7 @@ class ParseJsonMovieDetailsRepository @Inject constructor(
                 val episodeNumber = element.select("span.number").text().trim()
                 val episodeName = element.select("span.name").text().trim()
                 val href = element.attr("href")
-                val link = if (href.startsWith("https://1hd")) href else "https://1hd.art$href"
+                val link = if (href.startsWith("https://1hd")) href else "${BuildConfig.BASE_URL}$href"
                 episodesMutableList.add(MovieEpisodesDataModel(episodeNumber, episodeName, link))
             }
             episodesMutableList

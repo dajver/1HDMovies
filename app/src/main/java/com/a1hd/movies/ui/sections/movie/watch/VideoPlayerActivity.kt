@@ -1,5 +1,6 @@
 package com.a1hd.movies.ui.sections.movie.watch
 
+import com.a1hd.movies.BuildConfig
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -38,13 +39,13 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>(ActivityVid
 
     private lateinit var simpleExoplayer: ExoPlayer
     private lateinit var videoUrl: String
-    private var referer: String = "https://1hd.art/"
+    private var referer: String = "${BuildConfig.BASE_URL}/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val bundle = intent.extras
         videoUrl = bundle?.getString(EXTRA_LINK).toString()
-        referer = bundle?.getString(EXTRA_REFERER) ?: "https://1hd.art/"
+        referer = bundle?.getString(EXTRA_REFERER) ?: "${BuildConfig.BASE_URL}/"
         fullScreen()
     }
 
@@ -140,7 +141,7 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>(ActivityVid
         private const val EXTRA_LINK = "EXTRA_LINK"
         private const val EXTRA_REFERER = "EXTRA_REFERER"
 
-        fun setUrl(context: Context, url: String, referer: String = "https://1hd.art/"): Intent {
+        fun setUrl(context: Context, url: String, referer: String = "${BuildConfig.BASE_URL}/"): Intent {
             val intent = Intent(context, VideoPlayerActivity::class.java)
             intent.putExtra(EXTRA_LINK, url)
             intent.putExtra(EXTRA_REFERER, referer)

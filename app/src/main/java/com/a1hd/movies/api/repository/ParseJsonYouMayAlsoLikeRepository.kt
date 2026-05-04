@@ -1,5 +1,6 @@
 package com.a1hd.movies.api.repository
 
+import com.a1hd.movies.BuildConfig
 import com.a1hd.movies.api.RestHttpClient
 import com.a1hd.movies.etc.extensions.io
 import org.jsoup.Jsoup
@@ -10,7 +11,7 @@ class ParseJsonYouMayAlsoLikeRepository @Inject constructor(
 ) {
 
     suspend fun fetchYouMayAlsoLike(url: String): List<MoviesDataModel> = io {
-        val linkToMovie = if (url.startsWith("https://1hd")) url else "https://1hd.art/$url"
+        val linkToMovie = if (url.startsWith("https://1hd")) url else "${BuildConfig.BASE_URL}/$url"
         val doc = Jsoup.parse(restHttpClient.get(linkToMovie))
         val moviesElements = doc.select("div.swiper-slide").select("div.item-film")
         val filmVisualInformation = moviesElements.select("div.film-thumbnail").select("img.film-thumbnail-img")
