@@ -12,7 +12,7 @@ class ParseJsonMovieDetailsRepository @Inject constructor(
     // Seasons are loaded from the series page HTML (a.ss-item elements with data-id hashes)
     // Episodes are fetched via: https://1hd.art/ajax/ajax.php?episode={season-data-id-hash}
     suspend fun fetchDetails(url: String): MoviesDetailsDataModel = io {
-        val baseUrl = if (url.startsWith("https://1hd")) url else "https://1hd.art"
+        val baseUrl = "https://1hd.art"
         val linkToMovieDetails = if (url.startsWith("https://1hd")) url else "$baseUrl$url"
         val doc = Jsoup.parse(restHttpClient.get(linkToMovieDetails))
         val type = if (linkToMovieDetails.contains("movie")) MovieType.MOVIE else MovieType.TV_SHOW
@@ -32,9 +32,8 @@ class ParseJsonMovieDetailsRepository @Inject constructor(
         val release = ratingAndOther.getOrElse(5) { "" }
         val production = ratingAndOther.getOrElse(6) { "" }
 
-        val watchMovieLink = "$baseUrl$linkToWatch"
-        val episodeId = extractEpisodeId(watchMovieLink)
-        val watchMovieLinkWithEpisodeId = "$baseUrl$linkToWatch/$episodeId"
+        val fullLinkToWatch = if (linkToWatch.startsWith("https://")) linkToWatch else "$baseUrl$linkToWatch"
+        val watchMovieLinkWithEpisodeId = fullLinkToWatch
         val movieDetailsModel = if (type == MovieType.MOVIE) {
             MoviesDetailsDataModel(title, thumbnail, linkToWatch, linkToMovieDetails, watchMovieLinkWithEpisodeId, type, description, quality, cast, genre, duration, country, imdb, release, production)
         } else {
@@ -43,19 +42,6 @@ class ParseJsonMovieDetailsRepository @Inject constructor(
         movieDetailsModel
     }
 
-    private suspend fun extractEpisodeId(watchUrl: String): String? {
-        val doc = Jsoup.parse(restHttpClient.get(watchUrl))
-        val scriptTags = doc.getElementsByTag("script")
-        for (scriptTag in scriptTags) {
-            val scriptContent = scriptTag.data()
-            if (scriptContent.contains("const movie =")) {
-                val pattern = "episodeId: '([0-9]+)'".toRegex()
-                val matchResult = pattern.find(scriptContent)
-                return matchResult?.groups?.get(1)?.value // Return the episodeId if found
-            }
-        }
-        return null
-    }
 
     private suspend fun getSeasons(doc: org.jsoup.nodes.Document): MutableList<MovieSeasonDataModel> = io {
         try {

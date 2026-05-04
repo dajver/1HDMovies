@@ -18,7 +18,7 @@ class SeasonsHolder(private val binding: ItemSeasonBinding) : RecyclerView.ViewH
             binding.tvSeason.setTypeface(binding.tvSeason.typeface, Typeface.NORMAL)
         }
 
-        binding.tvSeason.text = String.format("%s %s", "Season", movieData.seasonNumber)
+        binding.tvSeason.text = movieData.seasonNumber
     }
 
     fun select(hasFocus: Boolean, movieData: MovieSeasonDataModel) {

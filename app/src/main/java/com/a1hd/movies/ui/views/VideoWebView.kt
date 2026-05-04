@@ -56,7 +56,7 @@ class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(c
         viewBinding.videoViewWebview.webViewClient = object : WebViewClient() {
             override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
                 val url = request.url.toString()
-                if (url.endsWith(".m3u8")) {
+                if (url.contains(".m3u8")) {
                     if (!isRequesting) {
                         sourceList.clear()
                         isRequesting = true
@@ -77,6 +77,46 @@ class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(c
                 return super.shouldInterceptRequest(view, request)
             }
 
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                // Auto-click play button after page loads with multiple attempts
+                val autoPlayScript = """
+                    (function() {
+                        function tryPlay() {
+                            // JW Player
+                            if (typeof jwplayer !== 'undefined') {
+                                try { jwplayer().play(); return true; } catch(e) {}
+                            }
+                            // Video.js
+                            var vjsPlayer = document.querySelector('.video-js');
+                            if (vjsPlayer && vjsPlayer.player) {
+                                try { vjsPlayer.player.play(); return true; } catch(e) {}
+                            }
+                            // HTML5 video
+                            var video = document.querySelector('video');
+                            if (video) {
+                                video.play();
+                                return true;
+                            }
+                            // Click play buttons
+                            var selectors = ['.jw-icon-playback', '.jw-display-icon-container', '.vjs-big-play-button', '[class*="play-btn"]', '[class*="playBtn"]', 'button[aria-label*="Play"]', '.play-button', '#play-btn'];
+                            for (var i = 0; i < selectors.length; i++) {
+                                var btn = document.querySelector(selectors[i]);
+                                if (btn) { btn.click(); return true; }
+                            }
+                            return false;
+                        }
+                        // Try multiple times with delays
+                        setTimeout(tryPlay, 1000);
+                        setTimeout(tryPlay, 3000);
+                        setTimeout(tryPlay, 5000);
+                    })();
+                """.trimIndent()
+                handler.postDelayed({
+                    view?.evaluateJavascript(autoPlayScript, null)
+                }, 2000)
+            }
+
             override fun shouldOverrideUrlLoading(view: WebView?, url: String): Boolean {
                 lastOpenedScreenRepository.lastOpenedPage = url
                 return false
@@ -88,6 +128,10 @@ class VideoWebView(context: Context, attributeSet: AttributeSet) : FrameLayout(c
         viewBinding.videoViewWebview.settings.apply {
             cacheMode = WebSettings.LOAD_NO_CACHE
             javaScriptEnabled = true
+            domStorageEnabled = true
+            allowContentAccess = true
+            javaScriptCanOpenWindowsAutomatically = true
+            mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         }
 
         chromeClient.onConsoleErrorMessage = {

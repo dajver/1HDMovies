@@ -38,11 +38,13 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>(ActivityVid
 
     private lateinit var simpleExoplayer: ExoPlayer
     private lateinit var videoUrl: String
+    private var referer: String = "https://1hd.art/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val bundle = intent.extras
         videoUrl = bundle?.getString(EXTRA_LINK).toString()
+        referer = bundle?.getString(EXTRA_REFERER) ?: "https://1hd.art/"
         fullScreen()
     }
 
@@ -78,7 +80,13 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>(ActivityVid
     }
 
     private fun buildMediaSource(uri: Uri): MediaSource {
-        return HlsMediaSource.Factory(DefaultHttpDataSource.Factory())
+        val dataSourceFactory = DefaultHttpDataSource.Factory()
+            .setDefaultRequestProperties(mapOf(
+                "Referer" to referer,
+                "Origin" to referer.trimEnd('/')
+            ))
+            .setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36")
+        return HlsMediaSource.Factory(dataSourceFactory)
             .createMediaSource(MediaItem.Builder()
                 .setUri(uri)
                 .setMimeType(MimeTypes.APPLICATION_M3U8)
@@ -130,10 +138,12 @@ class VideoPlayerActivity : BaseActivity<ActivityVideoPlayerBinding>(ActivityVid
     companion object {
 
         private const val EXTRA_LINK = "EXTRA_LINK"
+        private const val EXTRA_REFERER = "EXTRA_REFERER"
 
-        fun setUrl(context: Context, url: String): Intent {
+        fun setUrl(context: Context, url: String, referer: String = "https://1hd.art/"): Intent {
             val intent = Intent(context, VideoPlayerActivity::class.java)
             intent.putExtra(EXTRA_LINK, url)
+            intent.putExtra(EXTRA_REFERER, referer)
             return intent
         }
     }
