@@ -9,11 +9,8 @@ class ParseJsonMovieDetailsRepository @Inject constructor(
     private val restHttpClient: RestHttpClient
 ) {
 
-    // EXAMPLE
-    // Doctor WHO
-    // https://1hd.art/series/watch-doctor-who-online-39521 - link to TV Show on the web page
-    // https://1hd.sx/ajax/movie/seasons/39521 - 39521 is ID of the link to TV Show seasons
-    // https://1hd.sx/ajax/movie/season/episodes/250 - 250 is ID for the season from previous request for /seasons
+    // Seasons are loaded from the series page HTML (a.ss-item elements with data-id hashes)
+    // Episodes are fetched via: https://1hd.art/ajax/ajax.php?episode={season-data-id-hash}
     suspend fun fetchDetails(url: String): MoviesDetailsDataModel = io {
         val baseUrl = if (url.startsWith("https://1hd")) url else "https://1hd.art"
         val linkToMovieDetails = if (url.startsWith("https://1hd")) url else "$baseUrl$url"
@@ -41,7 +38,7 @@ class ParseJsonMovieDetailsRepository @Inject constructor(
         val movieDetailsModel = if (type == MovieType.MOVIE) {
             MoviesDetailsDataModel(title, thumbnail, linkToWatch, linkToMovieDetails, watchMovieLinkWithEpisodeId, type, description, quality, cast, genre, duration, country, imdb, release, production)
         } else {
-            MoviesDetailsDataModel(title, thumbnail, linkToWatch, linkToMovieDetails, watchMovieLinkWithEpisodeId, type, description, quality, cast, genre, duration, country, imdb, release, production, getSeasons(linkToMovieDetails))
+            MoviesDetailsDataModel(title, thumbnail, linkToWatch, linkToMovieDetails, watchMovieLinkWithEpisodeId, type, description, quality, cast, genre, duration, country, imdb, release, production, getSeasons(doc))
         }
         movieDetailsModel
     }
@@ -60,39 +57,41 @@ class ParseJsonMovieDetailsRepository @Inject constructor(
         return null
     }
 
-    private suspend fun getSeasons(linkToMovie: String): MutableList<MovieSeasonDataModel> = io {
-        val regex = Regex("[0-9]+$")
-        val match = regex.find(linkToMovie)
-        val movieId = match?.value
-        val ajaxLink = "https://1hd.art/ajax/movie/seasons/$movieId"
-        val getResponse = restHttpClient.get(ajaxLink)
-        val doc = Jsoup.parse(getResponse)
-        val seasonIdList = doc.select("div.is-seasons").select("a").eachAttr("data-id")
-        val seasonNumberList = doc.select("div.is-seasons").select("strong").textNodes()
-        val seasonMutableList = mutableListOf<MovieSeasonDataModel>()
-        seasonIdList.forEachIndexed  { index, _ ->
-            val seasonId = seasonIdList[index]
-            val seasonNumber = seasonNumberList[index].text()
-            seasonMutableList.add(MovieSeasonDataModel(seasonId, seasonNumber, getEpisodes(seasonId)))
+    private suspend fun getSeasons(doc: org.jsoup.nodes.Document): MutableList<MovieSeasonDataModel> = io {
+        try {
+            val seasonElements = doc.select("div.is-seasons").select("a.ss-item")
+            val seasonMutableList = mutableListOf<MovieSeasonDataModel>()
+            seasonElements.forEach { element ->
+                val seasonHash = element.attr("data-id")
+                val seasonNumber = element.text().trim()
+                seasonMutableList.add(MovieSeasonDataModel(seasonHash, seasonNumber, getEpisodes(seasonHash)))
+            }
+            seasonMutableList
+        } catch (e: Exception) {
+            e.printStackTrace()
+            mutableListOf()
         }
-        seasonMutableList
     }
 
-    private suspend fun getEpisodes(seasonId: String): MutableList<MovieEpisodesDataModel> = io {
-        val ajaxLink = "https://1hd.art/ajax/movie/season/episodes/$seasonId"
-        val getResponse = restHttpClient.get(ajaxLink)
-        val doc = Jsoup.parse(getResponse)
-        val episodeNumberList = doc.select("div.is-info").select("span.number").textNodes()
-        val episodeNameList = doc.select("div.is-info").select("span.name").textNodes()
-        val linkList = doc.select("a").eachAttr("href")
-        val episodesMutableList = mutableListOf<MovieEpisodesDataModel>()
-        episodeNumberList.forEachIndexed { index, _ ->
-            val episodeNumber = episodeNumberList[index].text()
-            val episodeName = episodeNameList[index].text()
-            val link = if (linkList[index].startsWith("https://1hd")) linkList[index] else "https://1hd.art/${linkList[index]}"
-            episodesMutableList.add(MovieEpisodesDataModel(episodeNumber, episodeName, link))
+    private suspend fun getEpisodes(seasonHash: String): MutableList<MovieEpisodesDataModel> = io {
+        try {
+            val ajaxLink = "https://1hd.art/ajax/ajax.php?episode=$seasonHash"
+            val getResponse = restHttpClient.get(ajaxLink)
+            val doc = Jsoup.parse(getResponse)
+            val episodeElements = doc.select("a.ep-item")
+            val episodesMutableList = mutableListOf<MovieEpisodesDataModel>()
+            episodeElements.forEach { element ->
+                val episodeNumber = element.select("span.number").text().trim()
+                val episodeName = element.select("span.name").text().trim()
+                val href = element.attr("href")
+                val link = if (href.startsWith("https://1hd")) href else "https://1hd.art$href"
+                episodesMutableList.add(MovieEpisodesDataModel(episodeNumber, episodeName, link))
+            }
+            episodesMutableList
+        } catch (e: Exception) {
+            e.printStackTrace()
+            mutableListOf()
         }
-        episodesMutableList
     }
 }
 
