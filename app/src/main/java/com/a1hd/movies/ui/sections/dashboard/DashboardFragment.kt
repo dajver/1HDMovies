@@ -101,8 +101,15 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(FragmentDashboar
             binding.llMenu.isVisible = true
             binding.nsMoviesList.isVisible = true
 
-            topMoviesRecyclerAdapter.setMovies(it.filter { it.type == MovieType.MOVIE }.toMutableList())
-            topTvShowsRecyclerAdapter.setMovies(it.filter { it.type == MovieType.TV_SHOW }.toMutableList())
+            val topMovies = it.filter { it.type == MovieType.MOVIE }.toMutableList()
+            topMoviesRecyclerAdapter.setMovies(topMovies)
+            val topTvShows = it.filter { it.type == MovieType.TV_SHOW }.toMutableList()
+            topTvShowsRecyclerAdapter.setMovies(topTvShows)
+
+            binding.tvTopMovies.isVisible = topMovies.isNotEmpty()
+            binding.rvTopMovies.isVisible = topMovies.isNotEmpty()
+            binding.tvTopTvShows.isVisible = topTvShows.isNotEmpty()
+            binding.rvTopTvShows.isVisible = topTvShows.isNotEmpty()
         }
 
         dashboardViewModel.fetchMovies()

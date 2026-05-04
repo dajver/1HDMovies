@@ -101,6 +101,7 @@
                 </FrameLayout>
 
                 <TextView
+                    android:id="@+id/tvTopMovies"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -119,6 +120,7 @@
                     tools:listitem="@layout/item_dashboard" />
 
                 <TextView
+                    android:id="@+id/tvTopTvShows"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
