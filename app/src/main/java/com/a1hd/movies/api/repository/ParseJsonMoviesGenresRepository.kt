@@ -1,13 +1,16 @@
 package com.a1hd.movies.api.repository
 
+import com.a1hd.movies.api.RestHttpClient
 import com.a1hd.movies.etc.extensions.io
 import org.jsoup.Jsoup
 import javax.inject.Inject
 
-class ParseJsonMoviesGenresRepository @Inject constructor() {
+class ParseJsonMoviesGenresRepository @Inject constructor(
+    private val restHttpClient: RestHttpClient
+) {
 
     suspend fun fetchMoviesByGenre(genre: GenresEnum, page: Int): List<MoviesDataModel> = io {
-        val doc = Jsoup.connect("${genre.url}?page=$page").get()
+        val doc = Jsoup.parse(restHttpClient.get("${genre.url}?page=$page"))
         val moviesElements = doc.select("div.container").select("div.film-list").select("div.item-film")
         val filmVisualInformation = moviesElements.select("div.film-thumbnail").select("img.film-thumbnail-img")
         val filmTextInformation = moviesElements.select("div.film-detail")
@@ -44,11 +47,11 @@ class ParseJsonMoviesGenresRepository @Inject constructor() {
 }
 
 enum class GenresEnum(val url: String) {
-    ACTION("https://1hd.to/genre/action-10"),
-    COMEDY("https://1hd.to/genre/comedy-7"),
-    DRAMA("https://1hd.to/genre/drama-4"),
-    FANTASY("https://1hd.to/genre/fantasy-13"),
-    HORROR("https://1hd.to/genre/horror-14"),
-    MYSTERY("https://1hd.to/genre/mystery-1"),
-    TOP_IMDB("https://1hd.to/top-imdb");
+    ACTION("https://1hd.art/genre/action"),
+    COMEDY("https://1hd.art/genre/comedy"),
+    DRAMA("https://1hd.art/genre/drama"),
+    FANTASY("https://1hd.art/genre/fantasy"),
+    HORROR("https://1hd.art/genre/horror"),
+    MYSTERY("https://1hd.art/genre/mystery"),
+    TOP_IMDB("https://1hd.art/top-imdb");
 }

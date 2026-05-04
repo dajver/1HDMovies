@@ -12,6 +12,6 @@ class LastOpenedScreenRepository @Inject constructor(
     prefs: SharedPreferences
 ) {
 
-    var lastOpenedPage: String by prefs.string(LAST_OPENED_PAGE_LIST, "https://1hd.to/home")
+    var lastOpenedPage: String by prefs.string(LAST_OPENED_PAGE_LIST, "https://1hd.art/home")
 
 }

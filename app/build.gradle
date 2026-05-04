@@ -2,17 +2,17 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'dagger.hilt.android.plugin'
-    id 'kotlin-kapt'
+    id 'com.google.devtools.ksp'
 }
 
 android {
     namespace 'com.a1hd.movies'
-    compileSdk 35
+    compileSdk 36
 
     defaultConfig {
         applicationId "com.a1hd.movies"
         minSdk 26
-        targetSdkVersion 35
+        targetSdkVersion 36
         versionCode 1
         versionName "1.0"
     }
@@ -24,6 +24,7 @@ android {
         }
     }
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
@@ -48,28 +49,29 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.16.0'
-    implementation 'androidx.activity:activity-ktx:1.10.1'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
+    implementation 'androidx.core:core-ktx:1.18.0'
+    implementation 'androidx.activity:activity-ktx:1.13.0'
     implementation 'androidx.appcompat:appcompat:1.7.1'
-    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'com.google.android.material:material:1.13.0'
     implementation "androidx.preference:preference-ktx:1.2.1"
-    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'com.google.android.material:material:1.13.0'
     implementation 'org.apache.httpcomponents:httpclient:4.5.14'
 
     // contains viewModels() delegate
-    implementation "androidx.fragment:fragment-ktx:1.8.8"
+    implementation "androidx.fragment:fragment-ktx:1.8.9"
 
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.9.2"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.2"
-    implementation "androidx.lifecycle:lifecycle-common-java8:2.9.2"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.10.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.10.0"
 
     // Hilt
-    implementation "com.google.dagger:hilt-android:2.57"
-    implementation 'androidx.media3:media3-datasource:1.7.1'
-    kapt "com.google.dagger:hilt-android-compiler:2.57"
+    implementation "com.google.dagger:hilt-android:2.59.2"
+    implementation 'androidx.media3:media3-datasource:1.10.0'
+    ksp "com.google.dagger:hilt-android-compiler:2.59.2"
 
     // ExoPlayer
-    def media3_version = "1.7.1"
+    def media3_version = "1.10.0"
     implementation "androidx.media3:media3-exoplayer:$media3_version"
     implementation "androidx.media3:media3-exoplayer-hls:$media3_version"
     implementation "androidx.media3:media3-exoplayer-ima:$media3_version"
@@ -78,11 +80,17 @@ dependencies {
     implementation "androidx.media3:media3-ui:$media3_version"
 
     // GSON
-    implementation 'com.google.code.gson:gson:2.13.1'
+    implementation 'com.google.code.gson:gson:2.14.0'
+
+    // OkHttp
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+
+    // Conscrypt (modern TLS provider)
+    implementation 'org.conscrypt:conscrypt-android:2.5.2'
 
     // JSOUP
-    implementation 'org.jsoup:jsoup:1.21.1'
+    implementation 'org.jsoup:jsoup:1.22.2'
 
     // Glide
-    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    implementation 'com.github.bumptech.glide:glide:5.0.7'
 }

@@ -1,6 +1,6 @@
 # 1HDMovie
 
-1HDMovie is android tv client for [1hd.to website](1hd.to). 1HD is free tv shows streaming website with zero ads, it allows you watch tv shows online, watch tv shows online free in high quality for free. You can also download full tv shows and watch it later if you want.
+1HDMovie is android tv client for [1hd.art website](1hd.art). 1HD is free tv shows streaming website with zero ads, it allows you watch tv shows online, watch tv shows online free in high quality for free. You can also download full tv shows and watch it later if you want.
 
 ## Disclamer
 This app is not official. It was made by me for my own usage on the Android TV, so all problems and issues which is in, made in purpose or because I'm lazy. But I will improve that product for usage when this bugs will be found.

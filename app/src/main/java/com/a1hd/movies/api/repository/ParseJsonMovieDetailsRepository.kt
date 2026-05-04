@@ -11,13 +11,13 @@ class ParseJsonMovieDetailsRepository @Inject constructor(
 
     // EXAMPLE
     // Doctor WHO
-    // https://1hd.to/series/watch-doctor-who-online-39521 - link to TV Show on the web page
+    // https://1hd.art/series/watch-doctor-who-online-39521 - link to TV Show on the web page
     // https://1hd.sx/ajax/movie/seasons/39521 - 39521 is ID of the link to TV Show seasons
     // https://1hd.sx/ajax/movie/season/episodes/250 - 250 is ID for the season from previous request for /seasons
     suspend fun fetchDetails(url: String): MoviesDetailsDataModel = io {
-        val baseUrl = if (url.startsWith("https://1hd")) url else "https://1hd.to"
+        val baseUrl = if (url.startsWith("https://1hd")) url else "https://1hd.art"
         val linkToMovieDetails = if (url.startsWith("https://1hd")) url else "$baseUrl$url"
-        val doc = Jsoup.connect(linkToMovieDetails).get()
+        val doc = Jsoup.parse(restHttpClient.get(linkToMovieDetails))
         val type = if (linkToMovieDetails.contains("movie")) MovieType.MOVIE else MovieType.TV_SHOW
         val movieDetails = doc.select("div.detail-elements")
         val thumbnail = movieDetails.select("img.film-thumbnail-img").attr("src")
@@ -29,11 +29,11 @@ class ParseJsonMovieDetailsRepository @Inject constructor(
         val cast = others.select("div.item-casts").select("div.item-body").text()
         val genre = others.select("div.item-genres").select("div.item-body").text()
         val ratingAndOther = others.select("div.item").select("div.item-body").eachText()
-        val duration = if (ratingAndOther.size >= 2) ratingAndOther[2] else ""
-        val country = if (ratingAndOther.size >= 3) ratingAndOther[3] else ""
-        val imdb = if (ratingAndOther.size >= 4) ratingAndOther[4] else ""
-        val release = if (ratingAndOther.size >= 5) ratingAndOther[5] else ""
-        val production = if (ratingAndOther.size >= 6) ratingAndOther[6] else ""
+        val duration = ratingAndOther.getOrElse(2) { "" }
+        val country = ratingAndOther.getOrElse(3) { "" }
+        val imdb = ratingAndOther.getOrElse(4) { "" }
+        val release = ratingAndOther.getOrElse(5) { "" }
+        val production = ratingAndOther.getOrElse(6) { "" }
 
         val watchMovieLink = "$baseUrl$linkToWatch"
         val episodeId = extractEpisodeId(watchMovieLink)
@@ -46,8 +46,8 @@ class ParseJsonMovieDetailsRepository @Inject constructor(
         movieDetailsModel
     }
 
-    private fun extractEpisodeId(watchUrl: String): String? {
-        val doc = Jsoup.connect(watchUrl).get()
+    private suspend fun extractEpisodeId(watchUrl: String): String? {
+        val doc = Jsoup.parse(restHttpClient.get(watchUrl))
         val scriptTags = doc.getElementsByTag("script")
         for (scriptTag in scriptTags) {
             val scriptContent = scriptTag.data()
@@ -64,7 +64,7 @@ class ParseJsonMovieDetailsRepository @Inject constructor(
         val regex = Regex("[0-9]+$")
         val match = regex.find(linkToMovie)
         val movieId = match?.value
-        val ajaxLink = "https://1hd.to/ajax/movie/seasons/$movieId"
+        val ajaxLink = "https://1hd.art/ajax/movie/seasons/$movieId"
         val getResponse = restHttpClient.get(ajaxLink)
         val doc = Jsoup.parse(getResponse)
         val seasonIdList = doc.select("div.is-seasons").select("a").eachAttr("data-id")
@@ -79,7 +79,7 @@ class ParseJsonMovieDetailsRepository @Inject constructor(
     }
 
     private suspend fun getEpisodes(seasonId: String): MutableList<MovieEpisodesDataModel> = io {
-        val ajaxLink = "https://1hd.to/ajax/movie/season/episodes/$seasonId"
+        val ajaxLink = "https://1hd.art/ajax/movie/season/episodes/$seasonId"
         val getResponse = restHttpClient.get(ajaxLink)
         val doc = Jsoup.parse(getResponse)
         val episodeNumberList = doc.select("div.is-info").select("span.number").textNodes()
@@ -89,7 +89,7 @@ class ParseJsonMovieDetailsRepository @Inject constructor(
         episodeNumberList.forEachIndexed { index, _ ->
             val episodeNumber = episodeNumberList[index].text()
             val episodeName = episodeNameList[index].text()
-            val link = if (linkList[index].startsWith("https://1hd")) linkList[index] else "https://1hd.to/${linkList[index]}"
+            val link = if (linkList[index].startsWith("https://1hd")) linkList[index] else "https://1hd.art/${linkList[index]}"
             episodesMutableList.add(MovieEpisodesDataModel(episodeNumber, episodeName, link))
         }
         episodesMutableList

@@ -1,13 +1,16 @@
 package com.a1hd.movies.api.repository
 
+import com.a1hd.movies.api.RestHttpClient
 import com.a1hd.movies.etc.extensions.io
 import org.jsoup.Jsoup
 import javax.inject.Inject
 
-class ParseJsonMostPopularRepository @Inject constructor() {
+class ParseJsonMostPopularRepository @Inject constructor(
+    private val restHttpClient: RestHttpClient
+) {
 
     suspend fun fetchMostPopular(): List<MostPopularMoviesDataModel> = io {
-        val doc = Jsoup.connect("https://1hd.to/home").get()
+        val doc = Jsoup.parse(restHttpClient.get("https://1hd.art/home"))
         val moviesElements = doc.select("div.swiper-wrapper")
         val movieDetailsContainer = moviesElements.select("div.container").select("div.is-caption")
         val thumbnails = moviesElements.select("div.slide-cover").select("img").eachAttr("src")
@@ -27,7 +30,7 @@ class ParseJsonMostPopularRepository @Inject constructor() {
             val name = names[index]
             val thumbnail = thumbnails[index]
             val link = links[index]
-            val baseUrl = if (link.startsWith("https://1hd")) link else "https://1hd.to"
+            val baseUrl = if (link.startsWith("https://1hd")) link else "https://1hd.art"
             val watchMovieLink = "$baseUrl$link"
             val episodeId = extractEpisodeId(watchMovieLink)
             val watchMovieLinkWithEpisodeId = "$baseUrl$link/$episodeId"
@@ -39,8 +42,8 @@ class ParseJsonMostPopularRepository @Inject constructor() {
         moviesMap
     }
 
-    private fun extractEpisodeId(watchUrl: String): String? {
-        val doc = Jsoup.connect(watchUrl).get()
+    private suspend fun extractEpisodeId(watchUrl: String): String? {
+        val doc = Jsoup.parse(restHttpClient.get(watchUrl))
         val scriptTags = doc.getElementsByTag("script")
         for (scriptTag in scriptTags) {
             val scriptContent = scriptTag.data()

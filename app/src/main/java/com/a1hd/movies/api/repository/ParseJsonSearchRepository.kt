@@ -10,7 +10,7 @@ class ParseJsonSearchRepository @Inject constructor(
 ) {
 
     suspend fun fetchSearchResult(keyword: String): List<MoviesDataModel> = io {
-        val getResponse = restHttpClient.get("https://1hd.to/search?keyword=$keyword")
+        val getResponse = restHttpClient.get("https://1hd.art/search?keyword=$keyword")
         val doc = Jsoup.parse(getResponse)
         val moviesElements = doc.select("div.container").select("div.film-list").select("div.item-film")
         val filmVisualInformation = moviesElements.select("div.film-thumbnail").select("img.film-thumbnail-img")

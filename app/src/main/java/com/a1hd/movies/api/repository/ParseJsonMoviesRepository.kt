@@ -1,13 +1,16 @@
 package com.a1hd.movies.api.repository
 
+import com.a1hd.movies.api.RestHttpClient
 import com.a1hd.movies.etc.extensions.io
 import org.jsoup.Jsoup
 import javax.inject.Inject
 
-class ParseJsonMoviesRepository @Inject constructor() {
+class ParseJsonMoviesRepository @Inject constructor(
+    private val restHttpClient: RestHttpClient
+) {
 
     suspend fun fetchMovies(page: Int): List<MoviesDataModel> = io {
-        val doc = Jsoup.connect("https://1hd.to/movies?page=$page").get()
+        val doc = Jsoup.parse(restHttpClient.get("https://1hd.art/movies/page/$page"))
         val moviesElements = doc.select("div.container").select("div.film-list").select("div.item-film")
         val filmVisualInformation = moviesElements.select("div.film-thumbnail").select("img.film-thumbnail-img")
         val filmTextInformation = moviesElements.select("div.film-detail")
